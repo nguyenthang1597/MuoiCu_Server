@@ -1,9 +1,6 @@
+const AccountRouter = require('./Account');
 module.exports = (app) => {
-  app.use('/', (req, res) => {
-    res.json({
-      'message': 'OK'
-    })
-  })
+  app.use('/account', AccountRouter);
 
   app.use(function (req, res, next) {
     next(createError(404));
