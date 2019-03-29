@@ -1,6 +1,13 @@
 const AccountRouter = require('./Account');
+const CustomerRouter = require('./Customer');
+const SalaryRouter = require('./Salary');
+
 module.exports = (app) => {
   app.use('/account', AccountRouter);
+  app.use('/customer', CustomerRouter);
+  app.use('/salary', SalaryRouter);
+
+
 
   app.use(function (req, res, next) {
     next(createError(404));
