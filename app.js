@@ -3,6 +3,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
+const cors = require('cors');
 const {
   normalizePort,
   onError,
@@ -17,7 +18,7 @@ const config = require('./config');
 
 const app = express();
 let server = http.createServer(app);
-require('./lib/express')(app, logger, express, cookieParser, passport);
+require('./lib/express')(app, logger, express, cookieParser, passport, cors);
 require('./lib/passport')(passport);
 require('./routes')(app);
 
