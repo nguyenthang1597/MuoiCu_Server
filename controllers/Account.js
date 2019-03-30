@@ -48,10 +48,11 @@ module.exports = {
 		const {
 			Username,
 			Password,
-			Role
+			Role,
+			Name
 		} = req.body;
 		try {
-			let account = new Account(Username, Password, Role);
+			let account = new Account(Username, Password, Role, Name);
 
 			console.log(account);
 			let result = await account.save();

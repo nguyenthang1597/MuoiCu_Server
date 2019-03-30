@@ -1,10 +1,10 @@
-const Customer = require("../models/Customer");
+const Item = require("../models/Item");
 const Abstract = require("../models/Abstract");
 
 module.exports = {
     getList: async function (req, res, next) {
         try {
-            let resulft = await Abstract.getList(Customer, req.query);
+            let resulft = await Abstract.getList(Item, req.query);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -17,7 +17,7 @@ module.exports = {
     getByMa: async function (req, res, next) {
         try {
             var param = Object.assign(req.params, req.query);
-            let resulft = await Abstract.getOne(Customer, param);
+            let resulft = await Abstract.getOne(Item, param);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -29,7 +29,10 @@ module.exports = {
     },
     add: async function (req, res, next) {
         try {
-            let resulft = await Abstract.add(Customer, req.body);
+            let body = {
+                ...req.body
+            }
+            let resulft = await Abstract.add(Item, body);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -42,7 +45,7 @@ module.exports = {
     update: async function (req, res, next) {
         try {
             var param = Object.assign(req.params, req.query);
-            let resulft = await Abstract.update(Customer, req.body, req.param);
+            let resulft = await Abstract.update(Item, req.body, req.param);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -55,7 +58,7 @@ module.exports = {
     delete: async function (req, res, next) {
         try {
             var param = Object.assign(req.params, req.query)
-            let resulft = await Abstract.delete(Customer, param);
+            let resulft = await Abstract.delete(Item, param);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({

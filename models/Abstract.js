@@ -14,6 +14,7 @@ class Abstract {
             }
         }
         let sql = `SELECT * FROM ${ClassTable.getNameTable()} where ${where} `;
+        console.log(sql, wherevalue);
         let res = await query(sql, wherevalue);
         return res;
     }
@@ -24,8 +25,14 @@ class Abstract {
         return res[0];
     }
     static async add(ClassTable, param) {
-        let sql = `INSERT INTO TABLE ${ClassTable.getNameTable()} (` + ClassTable.getColmun() + `) VALUES ?`;
-        let res = await query(sql, param);
+        let params = Object.keys(param).map(e => param[e]);
+        let values = '';
+        for (let a of params) {
+            values = values + `'${a}'` + ',';
+        }
+        values = values.substr(0, values.length - 1);
+        let sql = `INSERT INTO ${ClassTable.getNameTable()} (` + ClassTable.getColmun() + `) VALUES (${values})`;
+        let res = await query(sql, params);
         return res;
     }
     static async update(ClassTable, paramSetValue, paramWhere) {
@@ -34,7 +41,7 @@ class Abstract {
         let set = '';
         let param = [];
         for (var k in paramSetValue) {
-            set = setvalue + k + ' = ? ,';
+            set = set + k + ' = ? ,';
             param.push(paramSetValue[k]);
         }
         set = set.substr(0, set.length - 1);
@@ -54,7 +61,6 @@ class Abstract {
         return res;
     }
     static async delete(ClassTable, param) {
-        console.log('dadsa');
         if (!param)
             return null;
         let where = ' 1=? ';
@@ -68,8 +74,6 @@ class Abstract {
         if (where === ' where 1=? ')
             return null;
         let sql = `DELETE FROM ${ClassTable.getNameTable()} where ${where}`;
-        console.log(sql);
-        console.log(wherevalue);
         let res = await query(sql, wherevalue);
         return res;
     }

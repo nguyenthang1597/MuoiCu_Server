@@ -24,7 +24,6 @@ require('./routes')(app);
 
 const port = normalizePort(config.port)
 server.port = port;
-console.log(config);
 
 server.listen(server.port);
 server.on('error', onError.bind(server));
