@@ -36,6 +36,21 @@ class Account {
         if (res) return res[0];
         return null;
     }
+
+    static getNameTable() {
+        return "taikhoan";
+    }
+    static getColmun() {
+        return "`username`,`password`,`chucvu`";
+    }
+    static getSelect(tb) {
+        return `${tb}.username,${tb}.chucvu`;
+    }
+    static getParam(param) {
+        let tmp = ['username', 'password', 'chucvu'];
+        let arr = Object.keys(param).filter(e => tmp.includes(e)).map(e => param[e])
+        return arr;
+    }
 }
 
 module.exports = Account;

@@ -1,11 +1,12 @@
-const Employee = require("../models/Employee");
-const Account = require("../models/Account");
+const Item = require("../models/Item");
+const ItemAccessary = require("../models/ItemAccessary");
+const Abstract = require("../models/Abstract");
 const AbstractTwo = require("../models/AbstractTwo");
-const Abstract = require('../models/Abstract');
+
 module.exports = {
     getList: async function (req, res, next) {
         try {
-            let resulft = await AbstractTwo.getList(Employee, Account, req.query);
+            let resulft = await AbstractTwo.getList(Item, ItemAccessary, req.query);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -17,7 +18,9 @@ module.exports = {
     },
     getByMa: async function (req, res, next) {
         try {
-            let resulft = await AbstractTwo.getOne(Employee, Account, req.query, req.params);
+            var param = Object.assign(req.params, req.query);
+            console.log(req.query);
+            let resulft = await AbstractTwo.getOne(Item,ItemAccessary,req.query,req.params);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -29,7 +32,10 @@ module.exports = {
     },
     add: async function (req, res, next) {
         try {
-            let resulft = await AbstractTwo.add(Account, Employee, req.body);
+            let body = {
+                ...req.body
+            }
+            let resulft = await Abstract.add(Item, body);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -42,10 +48,9 @@ module.exports = {
     update: async function (req, res, next) {
         try {
             var param = Object.assign(req.params, req.query);
-            let resulft = await Abstract.update(Employee, req.body, req.param);
+            let resulft = await Abstract.update(Item, req.body, req.param);
             res.json(resulft);
         } catch (error) {
-            console.log(error);
             res.status(400).json({
                 error: {
                     message: error.message
@@ -56,7 +61,7 @@ module.exports = {
     delete: async function (req, res, next) {
         try {
             var param = Object.assign(req.params, req.query)
-            let resulft = await Abstract.delete(Employee, param);
+            let resulft = await Abstract.delete(Item, param);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -66,4 +71,5 @@ module.exports = {
             })
         }
     },
-}
+
+};
