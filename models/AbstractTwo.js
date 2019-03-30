@@ -45,11 +45,6 @@ class AbstractTwo {
         values = values.substr(0, values.length - 1);
         let sql1 = `INSERT INTO ${ClassTableOne.getNameTable()} (` + ClassTableOne.getColmun() + `) VALUES (${values})`;
         let res1 = await query(sql1);
-        console.log(res1);
-
-
-
-
         let param2 = ClassTableTwo.getParam(param);
         values = '';
         for (let a of param2) {
@@ -61,27 +56,7 @@ class AbstractTwo {
         return res2;
     }
     static async update(ClassTable, paramSetValue, paramWhere) {
-        if (!paramSetValue || !paramWhere && !paramSetValue)
-            return null;
-        let set = '';
-        let param = [];
-        for (var k in paramSetValue) {
-            set = set + k + ' = ? ,';
-            param.push(paramSetValue[k]);
-        }
-        set = set.substr(0, set.length - 1);
-        let where = ' 1=? ';
-        param.push(1);
-        if (paramWhere) {
-            for (var k in paramWhere) {
-                where = where + " AND " + k + ' = ? ';
-                param.push(paramWhere[k]);
-            }
-        }
 
-        let sql = `UPDATE ${ClassTable.getNameTable()} SET ${set} where ${where}`;
-        console.log(sql);
-        console.log(param);
         let res = await query(sql, param);
         return res;
     }
