@@ -18,16 +18,11 @@ const config = require('./config');
 
 const app = express();
 let server = http.createServer(app);
+let io = require('./lib/socket')(server);
+app.io = io;
 require('./lib/express')(app, logger, express, cookieParser, passport, cors);
 require('./lib/passport')(passport);
 require('./routes')(app);
-
-let io = require('./lib/socket')(server);
-io.on('connection', function (socket) {
-  socket.emit('connected', 'Hello')
-})
-app.io = io;
-
 
 const port = normalizePort(config.port)
 server.port = port;
