@@ -18,8 +18,6 @@ module.exports = {
     },
     getByMa: async function (req, res, next) {
         try {
-            var param = Object.assign(req.params, req.query);
-            console.log(req.query);
             let resulft = await AbstractTwo.getOne(Item, ItemPart, req.query, req.params);
             res.json(resulft);
         } catch (error) {
@@ -32,10 +30,7 @@ module.exports = {
     },
     add: async function (req, res, next) {
         try {
-            let body = {
-                ...req.body
-            }
-            let resulft = await Abstract.add(Item, body);
+            let resulft = await AbstractTwo.add(Item, ItemPart, req.body);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -47,8 +42,7 @@ module.exports = {
     },
     update: async function (req, res, next) {
         try {
-            var param = Object.assign(req.params, req.query);
-            let resulft = await Abstract.update(Item, req.body, req.param);
+            let resulft = await AbstractTwo.update(Item, ItemPart, req.body, req.params);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -60,9 +54,7 @@ module.exports = {
     },
     delete: async function (req, res, next) {
         try {
-            var param = Object.assign(req.params, req.query)
-            let resulft = await AbstractTwo.delete(Item, ItemPart, param);
-            let resulft = await Abstract.delete(Item, param);
+            let resulft = await AbstractTwo.delete(Item, ItemPart, req.params);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
