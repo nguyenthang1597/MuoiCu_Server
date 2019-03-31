@@ -55,26 +55,60 @@ class AbstractTwo {
         let res2 = await query(sql2);
         return res2;
     }
-    static async update(ClassTable, paramSetValue, paramWhere) {
+    static async update(ClassTableOne, ClassTableTwo, paramSetValue, paramWhere) {
+
+        let param = [1];
+        let where = ' 1=? ';
+        let param1=[], param2 = [];
+
+        if (paramWhere) {
+            for (var k in paramWhere) {
+                where = where + " AND " + k + ' = ? ';
+                param.push(paramWhere[k]);
+            }
+        }
+
+        let paramSetValue1 = ClassTableOne.getParam(paramSetValue);
+        let set1 = '', set2 = '';
+        for (var k in paramSetValue1) {
+            set1 = set1 + k + ' = ? ,';
+            param1.push(paramSetValue1[k]);
+        }
+        for (var k in paramSetValue2) {
+            set2 = set2 + k + ' = ? ,';
+            param2.push(paramSetValue2[k]);
+        }
+        set1 = set1.substr(0, set1.length - 1);
+        set2 = set2.substr(0, set2.length - 1);
+        let sql = `UPDATE ${ClassTableOne.getNameTable()} SET ${set1} WHERE ${ClassTableOne.getKey()} IN (SELECT ${ClassTableTwo.getForgenKey()} FROM ${ClassTableTwo.getNameTable()} where ${where})`;
+        console.log(sql);
+        res = await query(sql, wherevalue);
+
+        sql = `UPDATE ${ClassTableTwo.getNameTable()} SET ${set2} where ${where}`;
+        console.log(sql);
 
         let res = await query(sql, param);
         return res;
     }
-    static async delete(ClassTable, param) {
-        if (!param)
+    static async delete(ClassTableOne, ClassTableTwo, param1) {
+        let res = null;
+        if (!param1) {
             return null;
+        }
         let where = ' 1=? ';
         let wherevalue = [
             1,
         ];
-        for (var k in param) {
+        for (var k in param1) {
             where = where + " AND " + k + ' = ? ';
-            wherevalue.push(param[k]);
+            wherevalue.push(param1[k]);
         }
-        if (where === ' where 1=? ')
-            return null;
-        let sql = `DELETE FROM ${ClassTable.getNameTable()} where ${where}`;
-        let res = await query(sql, wherevalue);
+        let sql = `DELETE FROM ${ClassTableOne.getNameTable()} WHERE ${ClassTableOne.getKey()} IN (SELECT ${ClassTableTwo.getForgenKey()} FROM ${ClassTableTwo.getNameTable()} where ${where})`;
+        console.log(sql);
+        res = await query(sql, wherevalue);
+        sql = `DELETE FROM ${ClassTableTwo.getNameTable()} where ${where}`;
+        console.log(sql);
+        res = await query(sql, wherevalue);
         return res;
     }
 }
