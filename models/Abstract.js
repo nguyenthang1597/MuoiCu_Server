@@ -9,11 +9,14 @@ class Abstract {
         ];
         if (param) {
             for (var k in param) {
-                where = where + " AND " + k + ' = ? ';
-                if (ClassTable.getLike(k))
+                if (ClassTable.getLike(k)) {
+                    where = where + " AND " + k + ' LIKE ? ';
                     wherevalue.push("%" + param[k] + "%");
-                else
+                }
+                else {
+                    where = where + " AND " + k + ' = ? ';
                     wherevalue.push(param[k]);
+                }
             }
         }
         let sql = `SELECT * FROM ${ClassTable.getNameTable()} where ${where} `;
