@@ -26,7 +26,6 @@ class AbstractTwo {
             }
         }
         let sql = `SELECT ${ClassTableOne.getSelect('tb1')},${ClassTableTwo.getSelect('tb2')} FROM ${ClassTableOne.getNameTable()} tb1 INNER JOIN ${ClassTableTwo.getNameTable()} tb2 ON ${ClassTableOne.getJoin()} where ${where} `;
-        console.log(sql, wherevalue);
         let res = await query(sql, wherevalue);
         return res;
     }
@@ -56,38 +55,40 @@ class AbstractTwo {
         return res2;
     }
     static async update(ClassTableOne, ClassTableTwo, paramSetValue, paramWhere) {
+        if (!paramSetValue || !paramWhere)
+            return false;
 
-        let param = [1];
-        let where = ' 1=? ';
-        let param1=[], param2 = [];
-
-        if (paramWhere) {
-            for (var k in paramWhere) {
-                where = where + " AND " + k + ' = ? ';
-                param.push(paramWhere[k]);
+        let param = [1], where = ' 1=? ', res = null;
+        for (var k in paramWhere) {
+            where = where + " AND " + k + ' = ? ';
+            param.push(paramWhere[k]);
+        }
+        let paramSetValue1 = ClassTableOne.getArrayParam(paramSetValue);
+        if (paramSetValue1) {
+            let param1 = [];
+            let set1 = '';
+            for (var k in paramSetValue1) {
+                set1 = set1 + k + ' = ? ,';
+                param1.push(paramSetValue1[k]);
             }
+            set1 = set1.substr(0, set1.length - 1);
+            let sql = `UPDATE ${ClassTableOne.getNameTable()} SET ${set1} WHERE ${ClassTableOne.getKey()} IN (SELECT ${ClassTableTwo.getForgenKey()} FROM ${ClassTableTwo.getNameTable()} where ${where})`;
+            res = await query(sql, param1.concat(param));
         }
 
-        let paramSetValue1 = ClassTableOne.getParam(paramSetValue);
-        let set1 = '', set2 = '';
-        for (var k in paramSetValue1) {
-            set1 = set1 + k + ' = ? ,';
-            param1.push(paramSetValue1[k]);
+        let paramSetValue2 = ClassTableTwo.getArrayParam(paramSetValue);
+        if (paramSetValue2) {
+            let set2 = '';
+            let param2 = [];
+            for (var k in paramSetValue2) {
+                set2 = set2 + k + ' = ? ,';
+                param2.push(paramSetValue2[k]);
+            }
+            set2 = set2.substr(0, set2.length - 1);
+            let sql = `UPDATE ${ClassTableTwo.getNameTable()} SET ${set2} where ${where}`;
+            res = await query(sql, param2.concat(param));
         }
-        for (var k in paramSetValue2) {
-            set2 = set2 + k + ' = ? ,';
-            param2.push(paramSetValue2[k]);
-        }
-        set1 = set1.substr(0, set1.length - 1);
-        set2 = set2.substr(0, set2.length - 1);
-        let sql = `UPDATE ${ClassTableOne.getNameTable()} SET ${set1} WHERE ${ClassTableOne.getKey()} IN (SELECT ${ClassTableTwo.getForgenKey()} FROM ${ClassTableTwo.getNameTable()} where ${where})`;
-        console.log(sql);
-        res = await query(sql, wherevalue);
 
-        sql = `UPDATE ${ClassTableTwo.getNameTable()} SET ${set2} where ${where}`;
-        console.log(sql);
-
-        let res = await query(sql, param);
         return res;
     }
     static async delete(ClassTableOne, ClassTableTwo, param1) {
@@ -104,10 +105,8 @@ class AbstractTwo {
             wherevalue.push(param1[k]);
         }
         let sql = `DELETE FROM ${ClassTableOne.getNameTable()} WHERE ${ClassTableOne.getKey()} IN (SELECT ${ClassTableTwo.getForgenKey()} FROM ${ClassTableTwo.getNameTable()} where ${where})`;
-        console.log(sql);
         res = await query(sql, wherevalue);
         sql = `DELETE FROM ${ClassTableTwo.getNameTable()} where ${where}`;
-        console.log(sql);
         res = await query(sql, wherevalue);
         return res;
     }

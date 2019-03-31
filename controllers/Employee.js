@@ -41,8 +41,7 @@ module.exports = {
     },
     update: async function (req, res, next) {
         try {
-            var param = Object.assign(req.params, req.query)
-            let resulft = await Abstract.update(Employee, param);
+            let resulft = await AbstractTwo.update(Account, Employee,req.body, req.params);
             res.json(resulft);
         } catch (error) {
             console.log(error);

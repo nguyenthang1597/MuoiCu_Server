@@ -54,6 +54,15 @@ class Account {
         let arr = Object.keys(param).filter(e => tmp.includes(e)).map(e => param[e])
         return arr;
     }
+    static getArrayParam(param) {
+        let tmp = ['username', 'password', 'chucvu'];
+        let obj = {};
+        let arr = Object.keys(param).filter(e => tmp.includes(e));
+        arr.forEach(e => {
+            obj[e] = param[e];
+        });
+        return obj;
+    }
 }
 
 module.exports = Account;

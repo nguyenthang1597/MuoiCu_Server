@@ -16,6 +16,15 @@ class Employee {
         let arr = Object.keys(param).filter(e => tmp.includes(e)).map(e => param[e])
         return arr;
     }
+    static getArrayParam(param) {
+        let tmp = ['ten', 'cmnd', 'sdt', 'gmail', 'taikhoan'];
+        let obj = {};
+        let arr = Object.keys(param).filter(e => tmp.includes(e));
+        arr.forEach(e => {
+            obj[e] = param[e];
+        });
+        return obj;
+    }
     static getForgenKey() {
         return "taikhoan";
     }
