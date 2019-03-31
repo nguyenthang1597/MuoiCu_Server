@@ -10,11 +10,13 @@ class Abstract {
         if (param) {
             for (var k in param) {
                 where = where + " AND " + k + ' = ? ';
-                wherevalue.push(param[k]);
+                if (ClassTable.getLike(k))
+                    wherevalue.push("%" + param[k] + "%");
+                else
+                    wherevalue.push(param[k]);
             }
         }
         let sql = `SELECT * FROM ${ClassTable.getNameTable()} where ${where} `;
-        console.log(sql, wherevalue);
         let res = await query(sql, wherevalue);
         return res;
     }
@@ -55,8 +57,6 @@ class Abstract {
         }
 
         let sql = `UPDATE ${ClassTable.getNameTable()} SET ${set} where ${where}`;
-        console.log(sql);
-        console.log(param);
         let res = await query(sql, param);
         return res;
     }

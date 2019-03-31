@@ -31,6 +31,10 @@ class Employee {
     static getKey() {
         return "ma";
     }
+    static getLike(k) {
+        let tmp = ['ten', 'cmnd', 'sdt', 'gmail'];
+        return tmp.includes(k);
+    }
 }
 
 module.exports = Employee;

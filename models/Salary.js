@@ -7,6 +7,10 @@ class Salary {
     static getColmun() {
         return "`ten`,`tien`";
     }
+    static getLike(k) {
+        let tmp = ['ten'];
+        return tmp.includes(k);
+    }
 }
 
 module.exports = Salary;

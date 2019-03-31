@@ -104,7 +104,7 @@ class AbstractTwo {
             where = where + " AND " + k + ' = ? ';
             wherevalue.push(param1[k]);
         }
-        let sql = `DELETE FROM ${ClassTableOne.getNameTable()} WHERE ${ClassTableOne.getKey()} IN (SELECT ${ClassTableTwo.getForgenKey()} FROM ${ClassTableTwo.getNameTable()} where ${where})`;
+        let sql = `DELETE FROM ${ClassTableOne.getNameTable()} WHERE ${ClassTableOne.getKeyDelete()} IN (SELECT ${ClassTableTwo.getForgenKey()} FROM ${ClassTableTwo.getNameTable()} where ${where})`;
         res = await query(sql, wherevalue);
         sql = `DELETE FROM ${ClassTableTwo.getNameTable()} where ${where}`;
         res = await query(sql, wherevalue);

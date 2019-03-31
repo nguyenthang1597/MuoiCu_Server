@@ -63,6 +63,10 @@ class Account {
         });
         return obj;
     }
+    static getLike(k) {
+        let tmp = ['username', 'password', 'chucvu'];
+        return tmp.includes(k);
+    }
 }
 
 module.exports = Account;

@@ -8,6 +8,10 @@ class Item {
     static getSelect(tb) {
         return `${tb}.loaixe`;
     }
+    static getLike(k) {
+        let tmp = ['loaixe'];
+        return tmp.includes(k);
+    }
 }
 
 module.exports = Item;

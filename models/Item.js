@@ -11,6 +11,13 @@ class Item {
     static getSelect(tb) {
         return `${tb}.ma,${tb}.maphutung,${tb}.tentienganh,${tb}.tentiengviet,${tb}.loaiphutung,${tb}.giaban_head,${tb}.giaban_le,${tb}.giamua,${tb}.soluongtonkho`;
     }
+    static getForgenKey() {
+        return "maphutung";
+    }
+    static getLike(k) {
+        let tmp = ['maphutung', 'tentienganh', 'tentiengviet'];
+        return tmp.includes(k);
+    }
 }
 
 module.exports = Item;

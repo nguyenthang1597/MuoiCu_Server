@@ -20,7 +20,7 @@ module.exports = {
         try {
             var param = Object.assign(req.params, req.query);
             console.log(req.query);
-            let resulft = await AbstractTwo.getOne(Item,ItemPart,req.query,req.params);
+            let resulft = await AbstractTwo.getOne(Item, ItemPart, req.query, req.params);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -61,6 +61,7 @@ module.exports = {
     delete: async function (req, res, next) {
         try {
             var param = Object.assign(req.params, req.query)
+            let resulft = await AbstractTwo.delete(Item, ItemPart, param);
             let resulft = await Abstract.delete(Item, param);
             res.json(resulft);
         } catch (error) {
