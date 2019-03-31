@@ -25,6 +25,7 @@ class Item {
         return tmp.includes(k);
     }
     static getParam(param) {
+        let tmp = ['maphutung', 'tentienganh', 'tentiengviet', 'loaiphutung', 'giaban_head', 'giaban_le', 'giamua', 'soluongtonkho'];
         let arr = Object.keys(param).filter(e => tmp.includes(e)).map(e => param[e])
         return arr;
     }

@@ -9,7 +9,7 @@ class AbstractTwo {
         ];
         if (param) {
             for (var k in param) {
-                where = where + " AND " + k + ' = ? ';
+                where = where + " AND tb1." + k + ' = ? ';
                 wherevalue.push(param[k]);
             }
         }
@@ -56,7 +56,7 @@ class AbstractTwo {
     }
     static async addAuto(ClassTableOne, ClassTableTwo, param) {
         let param1 = ClassTableOne.getParam(param);
-        let values = '';
+        let values = '', val = '';
         for (let a of param1) {
             values = values + `'${a}'` + ',';
         }
@@ -67,7 +67,7 @@ class AbstractTwo {
         let param2 = ClassTableTwo.getParam(param);
         values = res1.insertId;
         for (let a of param2) {
-            values = values + "," + a;
+            values = values + ",'" + a + "'";
         }
         let sql2 = `INSERT INTO ${ClassTableTwo.getNameTable()} (` + ClassTableTwo.getColmun() + `) VALUES (${values})`;
         let res2 = await query(sql2);

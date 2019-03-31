@@ -30,13 +30,37 @@ class Abstract {
         return res[0];
     }
     static async add(ClassTable, param) {
-        let params = Object.keys(param).map(e => param[e]);
-        let values = '';
-        for (let a of params) {
-            values = values + `'${a}'` + ',';
+        var col = ClassTable.getColmun(param);
+        console.log('hello');
+        var values = '';
+        var params = [];
+
+        for (var k in col) {
+            values = values + "?,";
+            params.push(param[col[k]]);
         }
         values = values.substr(0, values.length - 1);
-        let sql = `INSERT INTO ${ClassTable.getNameTable()} (` + ClassTable.getColmun() + `) VALUES (${values})`;
+        let sql = `INSERT INTO ${ClassTable.getNameTable()} (` + col + `) VALUES (${values})`;
+        let res = await query(sql, params);
+        return res;
+    }
+    static async addMutil(ClassTable, param) {
+        let val = '';
+        var col = ClassTable.getColmun(param[0]);
+        var params = [];
+        param.forEach(element => {
+            var values = '';
+            for (var k in col) {
+                values = values + "?,";
+                params.push(element[col[k]]);
+            }
+            values = values.substr(0, values.length - 1);
+            val = val + "(" + values + "),";
+        });
+        val = val.substr(0, val.length - 1);
+
+        let sql = `INSERT INTO ${ClassTable.getNameTable()} (` + col + `) VALUES ${val}`;
+        console.log(sql);
         let res = await query(sql, params);
         return res;
     }
