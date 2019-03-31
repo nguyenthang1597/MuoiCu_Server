@@ -54,6 +54,25 @@ class AbstractTwo {
         let res2 = await query(sql2);
         return res2;
     }
+    static async addAuto(ClassTableOne, ClassTableTwo, param) {
+        let param1 = ClassTableOne.getParam(param);
+        let values = '';
+        for (let a of param1) {
+            values = values + `'${a}'` + ',';
+        }
+        values = values.substr(0, values.length - 1);
+        let sql1 = `INSERT INTO ${ClassTableOne.getNameTable()} (` + ClassTableOne.getColmun() + `) VALUES (${values})`;
+        let res1 = await query(sql1);
+        let id = [];
+        let param2 = ClassTableTwo.getParam(param);
+        values = res1.insertId;
+        for (let a of param2) {
+            values = values + "," + a;
+        }
+        let sql2 = `INSERT INTO ${ClassTableTwo.getNameTable()} (` + ClassTableTwo.getColmun() + `) VALUES (${values})`;
+        let res2 = await query(sql2);
+        return res2;
+    }
     static async update(ClassTableOne, ClassTableTwo, paramSetValue, paramWhere) {
         if (!paramSetValue || !paramWhere)
             return false;
@@ -64,7 +83,10 @@ class AbstractTwo {
             param.push(paramWhere[k]);
         }
         let paramSetValue1 = ClassTableOne.getArrayParam(paramSetValue);
-        if (paramSetValue1) {
+        if (Object.keys(paramSetValue1).length) {
+            console.log('vaoday1');
+            console.log(paramSetValue1);
+
             let param1 = [];
             let set1 = '';
             for (var k in paramSetValue1) {
@@ -72,12 +94,15 @@ class AbstractTwo {
                 param1.push(paramSetValue1[k]);
             }
             set1 = set1.substr(0, set1.length - 1);
-            let sql = `UPDATE ${ClassTableOne.getNameTable()} SET ${set1} WHERE ${ClassTableOne.getKey()} IN (SELECT ${ClassTableTwo.getForgenKey()} FROM ${ClassTableTwo.getNameTable()} where ${where})`;
+            let sql = `UPDATE ${ClassTableOne.getNameTable()} SET ${set1} WHERE ${ClassTableOne.getKey()} IN (SELECT ${ClassTableOne.getForgenKey()} FROM ${ClassTableTwo.getNameTable()} where ${where})`;
             res = await query(sql, param1.concat(param));
         }
 
         let paramSetValue2 = ClassTableTwo.getArrayParam(paramSetValue);
-        if (paramSetValue2) {
+        if (Object.keys(paramSetValue2).length) {
+            console.log('vaoday2');
+            console.log(paramSetValue2);
+
             let set2 = '';
             let param2 = [];
             for (var k in paramSetValue2) {
@@ -104,7 +129,7 @@ class AbstractTwo {
             where = where + " AND " + k + ' = ? ';
             wherevalue.push(param1[k]);
         }
-        let sql = `DELETE FROM ${ClassTableOne.getNameTable()} WHERE ${ClassTableOne.getKeyDelete()} IN (SELECT ${ClassTableTwo.getForgenKey()} FROM ${ClassTableTwo.getNameTable()} where ${where})`;
+        let sql = `DELETE FROM ${ClassTableOne.getNameTable()} WHERE ${ClassTableOne.getKey()} IN (SELECT ${ClassTableOne.getForgenKey()} FROM ${ClassTableTwo.getNameTable()} where ${where})`;
         res = await query(sql, wherevalue);
         sql = `DELETE FROM ${ClassTableTwo.getNameTable()} where ${where}`;
         res = await query(sql, wherevalue);

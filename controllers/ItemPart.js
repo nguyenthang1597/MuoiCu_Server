@@ -30,7 +30,7 @@ module.exports = {
     },
     add: async function (req, res, next) {
         try {
-            let resulft = await AbstractTwo.add(Item, ItemPart, req.body);
+            let resulft = await AbstractTwo.addAuto(Item, ItemPart, req.body);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({

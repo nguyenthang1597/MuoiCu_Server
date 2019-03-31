@@ -67,6 +67,9 @@ class Account {
         let tmp = ['username', 'password', 'chucvu'];
         return tmp.includes(k);
     }
+    static getForgenKey() {
+        return "taikhoan";
+    }
 }
 
 module.exports = Account;
