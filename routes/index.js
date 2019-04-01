@@ -7,6 +7,8 @@ const ItemPartRouter = require('./ItemPart');
 const ItemAccessaryRouter = require('./ItemAccessary');
 const BillRouter = require('./Bill');
 const BillleRouter = require('./BillLe');
+const BillSuaChuaRouter = require('./BillSuachua');
+
 
 const createError = require('http-errors');
 const LiftTable = require('../controllers/LiftTable');
@@ -21,6 +23,8 @@ module.exports = (app) => {
   app.use('/itemaccessary', ItemAccessaryRouter);
   app.use('/bill', BillRouter);
   app.use('/billle', BillleRouter);
+  app.use('/billsuachua', BillSuaChuaRouter);
+
 
 
 

@@ -1,10 +1,11 @@
 const Bill = require("../models/Bill");
+const BillSuachua = require("../models/BillSuachua");
 const AbstractTwo = require("../models/AbstractTwo");
 const Abstract = require('../models/Abstract');
 module.exports = {
     getList: async function (req, res, next) {
         try {
-            let resulft = await Abstract.getList(Bill, req.query);
+            let resulft = await AbstractTwo.getList(Bill, BillSuachua, req.query);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -17,7 +18,7 @@ module.exports = {
     getByMa: async function (req, res, next) {
         try {
             var param = Object.assign(req.params, req.query);
-            let resulft = await Abstract.getOne(Bill, param);
+            let resulft = await AbstractTwo.getList(Bill, BillSuachua, param);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -29,8 +30,22 @@ module.exports = {
     },
     add: async function (req, res, next) {
         try {
-            let resulft = await Abstract.add(Bill, req.body);
-            res.json(resulft);
+            var mahoadon = 'MHD-' + new Date().getTime();
+            let {
+                chitiet,
+                ...conlai
+            } = req.body;
+            var bodybill = conlai;
+            var detailbill = chitiet;
+            bodybill['trangthai'] = 0;
+            bodybill['loaihoadon'] = 0;
+            bodybill['mahoadon'] = mahoadon;
+            for (var k in detailbill) {
+                detailbill[k]['mahoadon'] = mahoadon;
+            }
+            let resulft = await Abstract.add(Bill, bodybill);
+            resulft = await Abstract.addMutil(BillSuachua, detailbill);
+            res.json({ "mahoadon": mahoadon });
         } catch (error) {
             res.status(400).json({
                 error: {
@@ -42,7 +57,7 @@ module.exports = {
     update: async function (req, res, next) {
         try {
             var param = Object.assign(req.params, req.query);
-            let resulft = await Abstract.update(Bill, req.body, req.param);
+            let resulft = await Abstract.add(Bill, req.body, req.param);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -65,19 +80,5 @@ module.exports = {
             })
         }
     },
-    thanhtoan: async function (req, res, next) {
-        try {
-            var param = [];
-            param["ngaythanhtoan"] = new Date();
-            param["trangthai"] = 1;
-            let resulft = await Abstract.update(Bill, param, req.param);
-            res.json(resulft);
-        } catch (error) {
-            res.status(400).json({
-                error: {
-                    message: error.message
-                }
-            })
-        }
-    },
+
 }

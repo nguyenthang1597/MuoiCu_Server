@@ -45,7 +45,7 @@ module.exports = {
             }
             let resulft = await Abstract.add(Bill, bodybill);
             resulft = await Abstract.addMutil(BillLe, detailbill);
-            res.json(resulft);
+            res.json({ "mahoadon": mahoadon });
         } catch (error) {
             res.status(400).json({
                 error: {
