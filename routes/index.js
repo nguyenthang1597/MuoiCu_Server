@@ -8,6 +8,7 @@ const ItemAccessaryRouter = require('./ItemAccessary');
 const BillRouter = require('./Bill');
 const BillleRouter = require('./BillLe');
 const BillSuaChuaRouter = require('./BillSuachua');
+const StatisticRouter = require('./Statistic');
 
 
 const createError = require('http-errors');
@@ -24,7 +25,7 @@ module.exports = (app) => {
   app.use('/bill', BillRouter);
   app.use('/billle', BillleRouter);
   app.use('/billsuachua', BillSuaChuaRouter);
-
+  app.use('/statistic', StatisticRouter);
 
 
 

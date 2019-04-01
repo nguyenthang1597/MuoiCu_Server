@@ -16,8 +16,7 @@ module.exports = {
     },
     getEmployee: async function (req, res, next) {
         try {
-            var param = Object.assign(req.params, req.query);
-            let resulft = await Abstract.getOne(Salary, param);
+            let resulft = await Statistic.getEmployee(req.query);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
