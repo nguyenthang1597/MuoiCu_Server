@@ -4,7 +4,11 @@ class Customer {
     static getNameTable() {
         return "khachhang";
     }
-    static getColmun() {
+    static getColmun(param) {
+        if (param) {
+            let tmp = ['ten', 'sodienthoai', 'diachi'];
+            return tmp.filter(e => Object.keys(param).includes(e));
+        }
         return "`ten`,`sodienthoai`,diachi`";
     }
     static getLike(k) {

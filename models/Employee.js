@@ -2,7 +2,11 @@ class Employee {
     static getNameTable() {
         return "nhanvien";
     }
-    static getColmun() {
+    static getColmun(param) {
+        if (param) {
+            let tmp = ['ten', 'cmnd', 'sdt', 'gmail', 'taikhoan'];
+            return tmp.filter(e => Object.keys(param).includes(e));
+        }
         return "`ten`,`cmnd`,`sdt`,`gmail`,`taikhoan`";
     }
     static getJoin() {

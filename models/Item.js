@@ -2,7 +2,11 @@ class Item {
     static getNameTable() {
         return "phutung";
     }
-    static getColmun() {
+    static getColmun(param) {
+        if (param) {
+            let tmp = ['maphutung', 'tentienganh', 'tentiengviet', 'loaiphutung', 'giaban_head', 'giaban_head', 'giamua', 'soluongtonkho'];
+            return tmp.filter(e => Object.keys(param).includes(e));
+        }
         return "`maphutung`,`tentienganh`,`tentiengviet`,`loaiphutung`,`giaban_head`, `giaban_le`, `giamua`, `soluongtonkho`";
     }
     static getJoin() {

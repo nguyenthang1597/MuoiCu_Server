@@ -40,7 +40,11 @@ class Account {
     static getNameTable() {
         return "taikhoan";
     }
-    static getColmun() {
+    static getColmun(param) {
+        if (param) {
+            let tmp = ['username', 'password', 'password'];
+            return tmp.filter(e => Object.keys(param).includes(e));
+        }
         return "`username`,`password`,`chucvu`";
     }
     static getSelect(tb) {
