@@ -27,6 +27,18 @@ module.exports = {
             })
         }
     },
+    getByTaikhoan: async function (req, res, next) {
+        try {
+            let resulft = await AbstractTwo.getOne(Employee, Account, req.query, req.params);
+            res.json(resulft);
+        } catch (error) {
+            res.status(400).json({
+                error: {
+                    message: error.message
+                }
+            })
+        }
+    },
     add: async function (req, res, next) {
         try {
             let resulft = await AbstractTwo.add(Account, Employee, req.body);
@@ -41,7 +53,7 @@ module.exports = {
     },
     update: async function (req, res, next) {
         try {
-            let resulft = await AbstractTwo.update(Account, Employee,req.body, req.params);
+            let resulft = await AbstractTwo.update(Account, Employee, req.body, req.params);
             res.json(resulft);
         } catch (error) {
             console.log(error);
