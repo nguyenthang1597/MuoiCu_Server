@@ -18,8 +18,8 @@ module.exports = {
         return res;
     },
     getEmployee: async function (praram) {
-        var sql = "select cthd.manvsuachua,SUM(cthd.tiencong) as tiencong,hd.ngaythanhtoan from  hoadon hd, chitiethoadonsuachua cthd " +
-            " where hd.mahoadon=cthd.mahoadon and hd.trangthai=1 ";
+        var sql = "select cthd.manvsuachua,nv.ten,SUM(cthd.tiencong) as tiencong,hd.ngaythanhtoan from  hoadon hd, chitiethoadonsuachua cthd , nhanvien nv " +
+            " where hd.mahoadon=cthd.mahoadon and hd.trangthai=1 AND nv.ma=cthd.manvsuachua";
 
         var param = [];
         if (praram.start) {
