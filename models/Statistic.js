@@ -18,7 +18,7 @@ module.exports = {
         return res;
     },
     getEmployee: async function (praram) {
-        var sql = "select cthd.manvsuachua,nv.ten,SUM(cthd.tiencong) as tiencong,hd.ngaythanhtoan from  hoadon hd, chitiethoadonsuachua cthd , nhanvien nv " +
+        var sql = "select cthd.manvsuachua,nv.ten,SUM(cthd.tiencong) as tiencong,  CAST(hd.ngaythanhtoan AS date) as ngaythanhtoan from  hoadon hd, chitiethoadonsuachua cthd , nhanvien nv " +
             " where hd.mahoadon=cthd.mahoadon and hd.trangthai=1 AND nv.ma=cthd.manvsuachua";
 
         var param = [];
@@ -33,8 +33,8 @@ module.exports = {
         if (param.manvsuachua) {
 
         }
-
-        sql = sql + " GROUP BY cthd.manvsuachua,hd.ngaythanhtoan ORDER BY hd.ngaythanhtoan ASC";
+//,convert(DATE,hd.ngaythanhtoan)
+        sql = sql + " GROUP BY cthd.manvsuachua,ngaythanhtoan ORDER BY hd.ngaythanhtoan ASC";
         let res = await query(sql, param);
         return res;
     },
