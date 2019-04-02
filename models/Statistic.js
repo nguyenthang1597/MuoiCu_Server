@@ -4,7 +4,7 @@ const query = require('../lib/db')
 module.exports = {
     getBill: async function (praram) {
         var param = [];
-        var sql = "select mahoadon,tongtien,ngaythanhtoan from hoadon where trangthai=1 ";
+        var sql = "select mahoadon,tongtien,ngaythanhtoan,loaihoadon from hoadon where trangthai=1 ";
         if (praram.start) {
             param.push(praram.start);
             sql = sql + "AND DATEDIFF(ngaythanhtoan,?) >= 0 ";
@@ -29,6 +29,9 @@ module.exports = {
         if (praram.end) {
             param.push(praram.end);
             sql = sql + "AND DATEDIFF(?,ngaythanhtoan) >= 0 ";
+        }
+        if (param.manvsuachua) {
+
         }
 
         sql = sql + " GROUP BY cthd.manvsuachua ORDER BY hd.ngaythanhtoan ASC";
