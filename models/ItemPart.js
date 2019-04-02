@@ -7,7 +7,7 @@ class Item {
             let tmp = ['maphutung', 'mamau', 'model'];
             return tmp.filter(e => Object.keys(param).includes(e));
         }
-        return "`maphutung`,`mamau`,`model`";
+        return "`maphutung`,`model`,`mamau`";
     }
     static getSelect(tb) {
         return `${tb}.mamau,${tb}.model`;
