@@ -2,10 +2,12 @@ const query = require('../lib/db')
 const Encrypt = require('../lib/encryptPassword');
 
 class AbstractTwo {
-    static async getList(ClassTableOne, ClassTableTwo, param) {
+    static async getList(ClassTableOne, ClassTableTwo, param, paramQsl1, paramQsl2) {
         let where = ' 1=? ';
         let param1 = ClassTableOne.getArrayParam(param);
+        param1 = Object.assign(param1, paramQsl1);
         let param2 = ClassTableTwo.getArrayParam(param);
+        param2 = Object.assign(param2, paramQsl2);
         console.log(param2);
         let wherevalue = [
             1,
