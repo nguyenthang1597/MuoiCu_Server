@@ -6,13 +6,13 @@ class Customer {
     }
     static getColmun(param) {
         if (param) {
-            let tmp = ['ten', 'sodienthoai', 'diachi'];
+            let tmp = ['ten', 'sodienthoai', 'diachi', 'biensoxe'];
             return tmp.filter(e => Object.keys(param).includes(e));
         }
-        return "`ten`,`sodienthoai`,diachi`";
+        return "`ten`,`sodienthoai`,diachi`,`biensoxe`";
     }
     static getLike(k) {
-        let tmp = ['ten', 'sodienthoai', 'diachi'];
+        let tmp = ['ten', 'sodienthoai', 'diachi', 'biensoxe'];
         return tmp.includes(k);
     }
 }
