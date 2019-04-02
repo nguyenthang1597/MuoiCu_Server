@@ -32,7 +32,7 @@ module.exports = {
     },
     add: async function (req, res, next) {
         try {
-            var body = req.body;
+            var body = req.body.chitiet;
             var ngay = new Date();
             body = body.map(e => ({ ...e, "ngay": ngay }));
             let resulft = await Abstract.add(ChamCong, body);
