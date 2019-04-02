@@ -35,7 +35,7 @@ module.exports = {
             var body = req.body.chitiet;
             var ngay = new Date();
             body = body.map(e => ({ ...e, "ngay": ngay }));
-            let resulft = await Abstract.add(ChamCong, body);
+            let resulft = await Abstract.addMutil(ChamCong, body);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
