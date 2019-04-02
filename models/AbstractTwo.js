@@ -2,24 +2,21 @@ const query = require('../lib/db')
 const Encrypt = require('../lib/encryptPassword');
 
 class AbstractTwo {
-    static async getList(ClassTableOne, ClassTableTwo, param, param1, param2) {
+    static async getList(ClassTableOne, ClassTableTwo, param) {
         let where = ' 1=? ';
+        let param1 = ClassTableOne.getArrayParam(param);
+        let param2 = ClassTableTwo.getArrayParam(param);
+        console.log(param2);
         let wherevalue = [
             1,
         ];
-        if (param) {
-            for (var k in param) {
-                where = where + " AND tb1." + k + ' = ? ';
-                wherevalue.push(param[k]);
-            }
-        }
-        if (param1) {
+        if (Object.keys(param1).length) {
             for (var k in param1) {
                 where = where + " AND tb1." + k + ' = ? ';
                 wherevalue.push(param1[k]);
             }
         }
-        if (param2) {
+        if (Object.keys(param2).length) {
             for (var k in param2) {
                 where = where + " AND tb2." + k + ' = ? ';
                 wherevalue.push(param2[k]);

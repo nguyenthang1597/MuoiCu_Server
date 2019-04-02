@@ -18,7 +18,7 @@ module.exports = {
         return res;
     },
     getEmployee: async function (praram) {
-        var sql = "select hd.mahoadon,SUM(cthd.tiencong),hd.ngaythanhtoan as tiencong from  hoadon hd, chitiethoadonsuachua cthd " +
+        var sql = "select cthd.manvsuachua,SUM(cthd.tiencong) as tiencong,hd.ngaythanhtoan from  hoadon hd, chitiethoadonsuachua cthd " +
             " where hd.mahoadon=cthd.mahoadon and hd.trangthai=1 ";
 
         var param = [];
@@ -31,7 +31,7 @@ module.exports = {
             sql = sql + "AND DATEDIFF(?,ngaythanhtoan) >= 0 ";
         }
 
-        sql = sql + " GROUP BY hd.mahoadon ORDER BY hd.ngaythanhtoan ASC";
+        sql = sql + " GROUP BY cthd.manvsuachua ORDER BY hd.ngaythanhtoan ASC";
         let res = await query(sql, param);
         return res;
     },

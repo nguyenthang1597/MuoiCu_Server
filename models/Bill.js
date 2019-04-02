@@ -19,8 +19,23 @@ class Bill {
         return "tb1.mahoadon=tb2.mahoadon";
     }
     static getSelect(tb) {
-        return `${tb}.mahoadon,${tb}.manv,${tb}.makh,${tb}.tongtien,${tb}.ngayban,${tb}.ngaythanhtoan,${tb}.trangthai,${tb}.loaihoadon`;
+        return `${tb}.mahoadon,${tb}.manv,${tb}.tenkh,${tb}.makh,${tb}.tongtien,${tb}.ngayban,${tb}.ngaythanhtoan,${tb}.trangthai,${tb}.loaihoadon`;
     }
+    static getParam(param) {
+        let tmp = ['mahoadon', 'manv', 'tenkh', 'makh', 'tongtien', 'ngayban', 'ngaythanhtoan', 'trangthai', 'loaihoadon'];
+        let arr = Object.keys(param).filter(e => tmp.includes(e)).map(e => param[e])
+        return arr;
+    }
+    static getArrayParam(param) {
+        let tmp = ['mahoadon', 'manv', 'tenkh', 'makh', 'tongtien', 'ngayban', 'ngaythanhtoan', 'trangthai', 'loaihoadon'];
+        let obj = {};
+        let arr = Object.keys(param).filter(e => tmp.includes(e));
+        arr.forEach(e => {
+            obj[e] = param[e];
+        });
+        return obj;
+    }
+
 }
 
 module.exports = Bill;
