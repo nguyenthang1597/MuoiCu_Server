@@ -2,7 +2,7 @@ const query = require('../lib/db')
 
 class Salary {
     static getNameTable() {
-        return "tiencong";
+        return "chamcong";
     }
     static getColmun(param) {
         if (param) {
