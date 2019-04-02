@@ -34,7 +34,7 @@ module.exports = {
 
         }
 
-        sql = sql + " GROUP BY cthd.manvsuachua,cthd.ngaythanhtoan ORDER BY hd.ngaythanhtoan ASC";
+        sql = sql + " GROUP BY cthd.manvsuachua,hd.ngaythanhtoan ORDER BY hd.ngaythanhtoan ASC";
         let res = await query(sql, param);
         return res;
     },
