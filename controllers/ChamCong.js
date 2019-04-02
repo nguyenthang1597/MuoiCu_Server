@@ -33,8 +33,9 @@ module.exports = {
     add: async function (req, res, next) {
         try {
             var body = req.body;
-            body['ngay'] = new Date();
-            let resulft = await Abstract.add(ChamCong, req.body);
+            var ngay = new Date();
+            body = body.map(e => ({ ...e, "ngay": ngay }));
+            let resulft = await Abstract.add(ChamCong, body);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
