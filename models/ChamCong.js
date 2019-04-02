@@ -6,10 +6,10 @@ class Salary {
     }
     static getColmun(param) {
         if (param) {
-            let tmp = ['manv', 'tiencong', 'vskp', 'vsbd', 'ghichu'];
+            let tmp = ['manv', 'tiencong', 'vskp', 'vsbd', 'ghichu', 'ngay'];
             return tmp.filter(e => Object.keys(param).includes(e));
         }
-        return "`manv`,`tiencong`,`vskp`,`vsbd`,`ghichu`";
+        return "`manv`,`tiencong`,`vskp`,`vsbd`,`ghichu`,`ngay`";
     }
     static getLike(k) {
         let tmp = ['ghichu'];
@@ -17,12 +17,12 @@ class Salary {
     }
 
     static getParam(param) {
-        let tmp = ['manv', 'tiencong', 'vskp', 'vsbd', 'ghichu'];
+        let tmp = ['manv', 'tiencong', 'vskp', 'vsbd', 'ghichu', 'ngay'];
         let arr = Object.keys(param).filter(e => tmp.includes(e)).map(e => param[e])
         return arr;
     }
     static getArrayParam(param) {
-        let tmp = ['manv', 'tiencong', 'vskp', 'vsbd', 'ghichu'];
+        let tmp = ['manv', 'tiencong', 'vskp', 'vsbd', 'ghichu', 'ngay'];
         let obj = {};
         let arr = Object.keys(param).filter(e => tmp.includes(e));
         arr.forEach(e => {
