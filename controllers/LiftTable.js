@@ -5,10 +5,13 @@ module.exports = function (io) {
         socket.on('select', (data) => {
             try {
                 let index = Number.parseInt(data.maban);
-                // liftTable[index].trangthai = true;
                 // liftTable[index].mahoadon = data.mahoadon;
+                liftTable[index].trangthai = true;
                 socket.emit('lifttable', liftTable);
+                socket.emit('index', index);
                 socket.broadcast.emit('lifttable', liftTable);
+                socket.broadcast.emit('index', index);
+
             } catch (e) {
 
             }
