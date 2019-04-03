@@ -25,7 +25,7 @@ require('./lib/passport')(passport);
 require('./routes')(app);
 
 const port = normalizePort(config.port)
-server.port = port;
+server.port = 80;
 
 server.listen(server.port);
 server.on('error', onError.bind(server));
