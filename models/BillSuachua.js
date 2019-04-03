@@ -31,6 +31,22 @@ class BillChan {
         });
         return obj;
     }
+    static async delete(param) {
+        let sql = "update hoadon set tranthai=2 where mahoadon= ?";
+        var res = await query(sql, param);
+        console.log(res);
+    }
+    static async getChitiet(param) {
+        let sql = "select * from hoadon where mahoadon= ?";
+        var result = [];
+        var res = await query(sql, param);
+        console.log(res);
+        result = res[0];
+        sql = "select * from chitiethoadonsuachua where mahoadon=?";
+        res = await query(sql, param);
+        result["chitiet"] = res;
+        return result;
+    }
 }
 
 module.exports = BillChan;

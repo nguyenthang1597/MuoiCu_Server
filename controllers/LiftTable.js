@@ -7,7 +7,9 @@ module.exports = function (io) {
         socket.on('connected', (data) => {
             socket.emit('connected', liftTable);
         });
-
+        socket.on('maban', (data) => {
+            socket.emit('mahoadon', liftTable[data]);
+        });
         socket.on('select', (data) => {
             try {
                 let index = Number.parseInt(data.maban);
@@ -33,7 +35,7 @@ module.exports = function (io) {
                 let index = Number.parseInt(data.maban);
                 liftTable[index].trangthai = 0;
                 liftTable[index].mahoadon = "";
-                socket.emit('lifttable', liftTable);
+                socket.emit('lifttableFull', liftTable);
                 socket.broadcast.emit('lifttableFull', liftTable);
             } catch (e) {
 

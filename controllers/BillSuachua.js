@@ -15,6 +15,18 @@ module.exports = {
             })
         }
     },
+    getChitiet: async function (req, res, next) {
+        try {
+            let resulft = await BillSuachua.getChitiet(req.params.mahoadon);
+            res.json(resulft);
+        } catch (error) {
+            res.status(400).json({
+                error: {
+                    message: error.message
+                }
+            })
+        }
+    },
     getByMa: async function (req, res, next) {
         try {
             var param = Object.assign(req.params, req.query);
@@ -69,8 +81,7 @@ module.exports = {
     },
     delete: async function (req, res, next) {
         try {
-            var param = Object.assign(req.params, req.query)
-            let resulft = await Abstract.delete(Bill, param);
+            let resulft = await BillSuachua.delete(req.params.ma);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
