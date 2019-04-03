@@ -16,10 +16,16 @@ class Item {
         let tmp = ['loaixe'];
         return tmp.includes(k);
     }
+    static getKey() {
+        return "ma";
+    }
     static getParam(param) {
         let tmp = ['loaixe'];
         let arr = Object.keys(param).filter(e => tmp.includes(e)).map(e => param[e])
         return arr;
+    }
+    static getForgenKey() {
+        return "maphutung";
     }
     static getArrayParam(param) {
         let tmp = ['loaixe'];

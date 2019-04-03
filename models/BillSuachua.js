@@ -42,7 +42,7 @@ class BillChan {
         var res = await query(sql, param);
         console.log(res);
         result = res[0];
-        sql = "select * from chitiethoadonsuachua where mahoadon=?";
+        sql = "select ct.*,pt.giaban_le as dongia from chitiethoadonsuachua ct INNER JOIN phutung pt ON ct.maphutung=pt.maphutung where ct.mahoadon=?";
         res = await query(sql, param);
         result["chitiet"] = res;
         return result;

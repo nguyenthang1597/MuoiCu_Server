@@ -2,6 +2,7 @@ const Employee = require("../models/Employee");
 const Account = require("../models/Account");
 const AbstractTwo = require("../models/AbstractTwo");
 const Abstract = require('../models/Abstract');
+const Encrypt = require('../lib/encryptPassword');
 module.exports = {
     getList: async function (req, res, next) {
         try {
@@ -41,6 +42,8 @@ module.exports = {
     },
     add: async function (req, res, next) {
         try {
+            var body=req.body;
+            body["password"];
             let resulft = await AbstractTwo.add(Account, Employee, req.body);
             res.json(resulft);
         } catch (error) {

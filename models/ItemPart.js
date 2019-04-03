@@ -24,6 +24,9 @@ class Item {
         let arr = Object.keys(param).filter(e => tmp.includes(e)).map(e => param[e])
         return arr;
     }
+    static getForgenKey() {
+        return "maphutung";
+    }
     static getArrayParam(param) {
         let tmp = ['mamau', 'model'];
         let obj = {};

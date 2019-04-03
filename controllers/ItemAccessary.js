@@ -54,7 +54,7 @@ module.exports = {
     },
     delete: async function (req, res, next) {
         try {
-            let resulft = await AbstractTwo.delete(Item, ItemAccessary, req.params);
+            let resulft = await AbstractTwo.delete(ItemAccessary,Item, req.params);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
