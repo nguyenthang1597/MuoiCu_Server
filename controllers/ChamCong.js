@@ -1,5 +1,6 @@
 const passport = require("passport");
 const ChamCong = require("../models/ChamCong");
+const Statistic = require("../models/Statistic");
 const Abstract = require("../models/Abstract");
 
 
@@ -62,6 +63,25 @@ module.exports = {
         try {
             var param = Object.assign(req.params, req.query)
             let resulft = await Abstract.delete(ChamCong, param);
+            res.json(resulft);
+        } catch (error) {
+            res.status(400).json({
+                error: {
+                    message: error.message
+                }
+            })
+        }
+    },
+    getByNgay: async function (req, res, next) {
+        try {
+            var ngay = new Date();
+            if (req.query.ngay)
+                ngay = req.query.ngay;
+            var param = [];
+            param["start"] = ngay;
+            param["end"] = ngay;
+
+            let resulft = await Statistic.getBangCong(param);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({

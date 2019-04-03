@@ -1,10 +1,11 @@
 const router = require('express').Router();
-const Salary = require('../controllers/ChamCong');
+const ChamCong = require('../controllers/ChamCong');
 
-router.get('/', Salary.getList);
-router.get('/ma/:ma', Salary.getByMa);
-router.post('/', Salary.add);
-router.put('/ma/:ma', Salary.update);
-router.delete('/ma/:ma', Salary.delete);
+router.get('/', ChamCong.getList);
+router.get('/theongay', ChamCong.getByNgay);
+router.get('/ma/:ma', ChamCong.getByMa);
+router.post('/', ChamCong.add);
+router.put('/ma/:ma', ChamCong.update);
+router.delete('/ma/:ma', ChamCong.delete);
 
 module.exports = router;
