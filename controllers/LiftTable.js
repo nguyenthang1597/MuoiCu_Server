@@ -11,6 +11,7 @@ module.exports = function (io) {
             socket.broadcast.emit('lifttable', liftTable);
         })
         socket.on('release', (data) => {
+            let index = Number.parseInt(data.maban);
             liftTable[index].trangthai = false;
             liftTable[index].mahoadon = "";
             socket.emit('lifttable', liftTable);
