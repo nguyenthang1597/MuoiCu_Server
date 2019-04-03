@@ -1,10 +1,8 @@
-var liftTable = new Array(8).fill({ "trangthai": false, "mahoadon": "" });
-
+var liftTable = Array(8).fill(1).map(e => ({ "trangthai": false, "mahoadon": "" }));
 module.exports = function (io) {
     io.on('connection', function (socket) {
         socket.emit('connected', liftTable);
         socket.on('select', (data) => {
-            data = JSON.parse(data);
             let index = Number.parseInt(data.maban);
             liftTable[index].trangthai = true;
             liftTable[index].mahoadon = data.mahoadon;
