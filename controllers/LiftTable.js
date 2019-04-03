@@ -8,6 +8,7 @@ module.exports = function (io) {
                 liftTable[index].trangthai = true;
                 liftTable[index].mahoadon = data.mahoadon;
                 socket.emit('lifttable', liftTable);
+                socket.broadcast.emit('test', liftTable);
                 socket.broadcast.emit('lifttable', liftTable);
             } catch (e) {
 
