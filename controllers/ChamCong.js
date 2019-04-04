@@ -87,5 +87,20 @@ module.exports = {
             })
         }
     },
+    addChamCong: async function (req, res, next) {
+        try {
+            var ngay = new Date();
+            if (req.params.ngay)
+                ngay = req.params.ngay;
+            let resulft = await Statistic.addBangCong(ngay);
+            res.json(resulft);
+        } catch (error) {
+            res.status(400).json({
+                error: {
+                    message: error.message
+                }
+            })
+        }
+    },
 
 };
