@@ -43,7 +43,7 @@ module.exports = {
     add: async function (req, res, next) {
         try {
             var body=req.body;
-            body["password"];
+            body["password"] = new Encrypt(body["password"]).hash();
             let resulft = await AbstractTwo.add(Account, Employee, req.body);
             res.json(resulft);
         } catch (error) {

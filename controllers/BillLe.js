@@ -54,6 +54,18 @@ module.exports = {
             })
         }
     },
+    getChitiet: async function (req, res, next) {
+        try {
+            let resulft = await BillLe.getChitiet(req.params.mahoadon);
+            res.json(resulft);
+        } catch (error) {
+            res.status(400).json({
+                error: {
+                    message: error.message
+                }
+            })
+        }
+    },
     update: async function (req, res, next) {
         try {
             var param = Object.assign(req.params, req.query);

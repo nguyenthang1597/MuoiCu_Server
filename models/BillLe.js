@@ -31,6 +31,17 @@ class BillLe {
         });
         return obj;
     }
+    static async getChitiet(param) {
+        let sql = "select * from hoadon where mahoadon= ?";
+        var result = [];
+        var res = await query(sql, param);
+        console.log(res);
+        result = res[0];
+        sql = "select ct.*,pt.giaban_le as dongia from chitiethoadonle ct INNER JOIN phutung pt ON ct.maphutung=pt.maphutung where ct.mahoadon=?";
+        res = await query(sql, param);
+        result["chitiet"] = res;
+        return result;
+    }
 }
 
 module.exports = BillLe;
