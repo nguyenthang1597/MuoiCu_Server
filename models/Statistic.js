@@ -39,21 +39,28 @@ module.exports = {
         return res;
     },
     getBangCong: async function (praram) {
-
-        var sql = "  select exists ( select * from chamcong where DATEDIFF(ngay,?)=0 ) as kq";
-        let res = await query(sql, praram);
-        if (!res || res[0].kq == 0) {
-
-            sql = " select nv.ma as manv , tc.tiencong , ? as ngay from nhanvien nv , taikhoan tk , "
-            " (select ct.manvsuachua,SUM(tiencong) as tiencong from chitiethoadonsuachua ct inner join hoadon hd "
-            " on  hd.mahoadon=ct.mahoadon where hd.trangthai=1 AND DATEDIFF(hd.ngaythanhtoan,?) = 0 "
-            " group by ct.manvsuachua ) as tc "
-            " where nv.taikhoan= tk.username and tk.chucvu='Sửa Chữa' and tc.manvsuachua=nv.ma ";
-            sql = " insert into chamcong(manv,tiencong,ngay) values " + sql;
-            var param = [praram, praram];
-            res = await query(sql, param);
+        var mdy = praram.split('-');
+        praram = new Date(mdy[2], mdy[1], mdy[0]);
+        var now = new Date();
+        if (now <= praram) {
+            var sql = "  select exists ( select * from chamcong where DATEDIFF(ngay,?)=0 ) as kq";
+            let res = await query(sql, praram);
+            if (!res || res[0].kq == 0) {
+                sql = " select nv.ma as manv , tc.tiencong ,? as ngay from nhanvien nv , taikhoan tk,  " +
+                    " (select ct.manvsuachua,SUM(tiencong) as tiencong from chitiethoadonsuachua ct inner join hoadon hd " +
+                    " on  hd.mahoadon=ct.mahoadon where hd.trangthai=1 AND DATEDIFF(hd.ngaythanhtoan,?) = 0 " +
+                    " group by ct.manvsuachua ) as tc " +
+                    " where nv.taikhoan= tk.username and tk.chucvu='Sửa Chữa' and tc.manvsuachua=nv.ma ";
+                sql = " insert into chamcong(manv,tiencong,ngay) " + sql;
+                var param = [praram, praram];
+                res = await query(sql, param);
+                if (res.affectedRows == 0) {
+                    sql = " insert into chamcong(manv,ngay) select  nv.ma , ? as ngay from nhanvien nv , taikhoan tk where nv.taikhoan= tk.username and tk.chucvu='Sửa Chữa' ";
+                    res = await query(sql, param);
+                }
+            }
         }
-        sql = "select * form chamcong where DATEDIFF(ngay,?) =0 ";
+        sql = "select * from chamcong where DATEDIFF(ngay,?) =0 ";
         res = await query(sql, praram);
         return res;
     },

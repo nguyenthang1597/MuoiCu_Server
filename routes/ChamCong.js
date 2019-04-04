@@ -2,7 +2,7 @@ const router = require('express').Router();
 const ChamCong = require('../controllers/ChamCong');
 
 router.get('/', ChamCong.getList);
-router.get('/theongay', ChamCong.getByNgay);
+router.get('/theongay/ngay/:ngay', ChamCong.getByNgay);
 router.get('/ma/:ma', ChamCong.getByMa);
 router.post('/', ChamCong.add);
 router.put('/ma/:ma', ChamCong.update);
