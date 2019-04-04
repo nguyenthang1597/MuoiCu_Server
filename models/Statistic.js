@@ -40,8 +40,6 @@ module.exports = {
         return res;
     },
     getBangCong: async function (praram) {
-        var mdy = praram.split('-');
-        praram = new Date(mdy[2], mdy[1], mdy[0]);
         var now = new Date();
         if (now <= praram) {
             var sql = "  select exists ( select * from chamcong where DATEDIFF(ngay,?)=0 ) as kq";
@@ -66,8 +64,6 @@ module.exports = {
         return res;
     },
     addBangCong: async function (praram, data) {
-        var mdy = praram.split('-');
-        praram = new Date(mdy[2], mdy[1], mdy[0]);
         var now = new Date();
         if (now >= praram)
             return { error: "không thể thêm vào trước ngày" };

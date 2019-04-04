@@ -76,7 +76,9 @@ module.exports = {
         try {
             var ngay = new Date();
             if (req.params.ngay)
-                ngay = req.params.ngay;
+                ngay = new Date(req.params.ngay);
+            // var mdy = praram.split('-');
+            // praram = new Date(mdy[2], mdy[1], mdy[0]);
             let resulft = await Statistic.getBangCong(ngay);
             res.json(resulft);
         } catch (error) {
@@ -91,8 +93,8 @@ module.exports = {
         try {
             var ngay = new Date();
             if (req.params.ngay)
-                ngay = req.params.ngay;
-            let resulft = await Statistic.addBangCong(ngay,res.body.chitiet);
+                ngay = new Date(req.params.ngay);
+            let resulft = await Statistic.addBangCong(ngay, res.body.chitiet);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
