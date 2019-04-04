@@ -39,26 +39,22 @@ module.exports = {
         return res;
     },
     getBangCong: async function (praram) {
-        var sql = "select DATEDIFF(hd.ngaythanhtoan,cc.ngay) as test, cc.ngay, cthd.manvsuachua,SUM(cthd.tiencong) as tiencong,  CAST(hd.ngaythanhtoan AS date) as ngaythanhtoan " +
-            " from  hoadon hd, chitiethoadonsuachua cthd , chamcong cc " +
-            " where hd.mahoadon=cthd.mahoadon and hd.trangthai=1 AND DATEDIFF(hd.ngaythanhtoan,cc.ngay)=0 AND cc.manv=cthd.manvsuachua";
 
-        var param = [];
-        if (praram.start) {
-            param.push(praram.start);
-            sql = sql + " AND DATEDIFF(hd.ngaythanhtoan,?) = 0 ";
+        var sql = "  select exists ( select * from chamcong where DATEDIFF(ngay,?)=0 ) as kq";
+        let res = await query(sql, praram);
+        if (!res || res[0].kq == 0) {
+
+            sql = " select nv.ma as manv , tc.tiencong , ? as ngay from nhanvien nv , taikhoan tk , "
+            " (select ct.manvsuachua,SUM(tiencong) as tiencong from chitiethoadonsuachua ct inner join hoadon hd "
+            " on  hd.mahoadon=ct.mahoadon where hd.trangthai=1 AND DATEDIFF(hd.ngaythanhtoan,?) = 0 "
+            " group by ct.manvsuachua ) as tc "
+            " where nv.taikhoan= tk.username and tk.chucvu='Sửa Chữa' and tc.manvsuachua=nv.ma ";
+            sql = " insert into chamcong(manv,tiencong,ngay) values " + sql;
+            var param = [praram, praram];
+            res = await query(sql, param);
         }
-        // if (praram.end) {
-        //     param.push(praram.end);
-        //     sql = sql + " AND DATEDIFF(?,hd.ngaythanhtoan) >= 0 ";
-        // }
-        if (param.manvsuachua) {
-            sql = sql + "AND nv.ma = ? ";
-            param.push(praram.manvsuachua);
-        }
-        sql = sql + " GROUP BY cthd.manvsuachua,ngaythanhtoan ORDER BY hd.ngaythanhtoan ASC ";
-        console.log(sql);
-        let res = await query(sql, param);
+        sql = "select * form chamcong where DATEDIFF(ngay,?) =0 ";
+        res = await query(sql, praram);
         return res;
     },
 };

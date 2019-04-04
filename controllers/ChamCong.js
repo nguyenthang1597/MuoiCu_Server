@@ -75,13 +75,9 @@ module.exports = {
     getByNgay: async function (req, res, next) {
         try {
             var ngay = new Date();
-            if (req.query.ngay)
-                ngay = req.query.ngay;
-            var param = [];
-            param["start"] = ngay;
-            param["end"] = ngay;
-
-            let resulft = await Statistic.getBangCong(param);
+            if (req.params.ngay)
+                ngay = req.params.ngay;
+            let resulft = await Statistic.getBangCong(ngay);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
