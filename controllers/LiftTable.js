@@ -40,6 +40,7 @@ module.exports = function (io) {
                 liftTable[index].mahoadon = "";
                 socket.emit('lifttableFull', liftTable);
                 socket.broadcast.emit('lifttableFull', liftTable);
+                socket.broadcast.emit('lifttableBill', liftTable);
             } catch (e) {
 
             }
