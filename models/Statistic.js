@@ -59,7 +59,7 @@ module.exports = {
                 }
             }
         }
-        sql = "select * from chamcong where DATEDIFF(ngay,?) =0 ";
+        sql = "select cc.*,nv.ma from chamcong cc inner join nhanvien nv on cc.manv=nv.ma where DATEDIFF(ngay,?) =0 GROUP BY cc.ma";
         res = await query(sql, praram);
         return res;
     },
