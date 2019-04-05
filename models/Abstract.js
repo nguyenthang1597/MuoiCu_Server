@@ -45,6 +45,8 @@ class Abstract {
         return res;
     }
     static async addMutil(ClassTable, param) {
+        console.log('praramarmara');
+        console.log(param);
         let val = '';
         var col = ClassTable.getColmun(param[0]);
         var params = [];

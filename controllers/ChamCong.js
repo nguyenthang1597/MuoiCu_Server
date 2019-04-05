@@ -93,7 +93,11 @@ module.exports = {
         try {
             var ngay = new Date();
             if (req.params.ngay)
+            {
+                console.log("ngayu",req.params.ngay);
                 ngay = new Date(req.params.ngay);
+                console.log(ngay);
+            }
             let resulft = await Statistic.addBangCong(ngay, req.body.chitiet);
             if (resulft == null)
                 res.status(400).json({
