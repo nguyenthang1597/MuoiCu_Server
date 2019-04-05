@@ -95,7 +95,14 @@ module.exports = {
             if (req.params.ngay)
                 ngay = new Date(req.params.ngay);
             let resulft = await Statistic.addBangCong(ngay, res.body.chitiet);
-            res.json(resulft);
+            if (resulft == null)
+                res.status(400).json({
+                    error: {
+                        message: "Không thể insert database"
+                    }
+                })
+            else
+                res.json(resulft);
         } catch (error) {
             res.status(400).json({
                 error: {

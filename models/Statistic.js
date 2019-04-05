@@ -66,7 +66,8 @@ module.exports = {
     addBangCong: async function (praram, data) {
         var now = new Date();
         if (now >= praram)
-            return { error: "không thể thêm vào trước ngày" };
+            return null;
         let res = await Abstract.addMutil(ChamCong, data);
+        return res;
     },
 };
