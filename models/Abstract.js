@@ -64,6 +64,26 @@ class Abstract {
         let res = await query(sql, params);
         return res;
     }
+    static async updeteMutil(ClassTable, param) {
+        let val = '';
+        var col = ClassTable.getColmun(param[0]);
+        var params = [];
+        param.forEach(element => {
+            var values = '';
+            for (var k in col) {
+                values = values + "?,";
+                params.push(element[col[k]]);
+            }
+            values = values.substr(0, values.length - 1);
+            val = val + "(" + values + "),";
+        });
+        val = val.substr(0, val.length - 1);
+
+        let sql = `INSERT INTO ${ClassTable.getNameTable()} (` + col + `) VALUES ${val}`;
+        console.log(sql);
+        let res = await query(sql, params);
+        return res;
+    }
     static async update(ClassTable, paramSetValue, paramWhere) {
         if (!paramSetValue || !paramWhere && !paramSetValue)
             return null;

@@ -94,7 +94,7 @@ module.exports = {
             var ngay = new Date();
             if (req.params.ngay)
                 ngay = new Date(req.params.ngay);
-            let resulft = await Statistic.addBangCong(ngay, res.body.chitiet);
+            let resulft = await Statistic.addBangCong(ngay, req.body.chitiet);
             if (resulft == null)
                 res.status(400).json({
                     error: {
