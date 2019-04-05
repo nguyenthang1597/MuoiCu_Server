@@ -67,6 +67,8 @@ module.exports = {
         var now = new Date();
         if (now >= praram)
             return null;
+        let sql = "DELETE FROM chamcong where DATEDIFF(ngay,?) =0";
+        res = await query(sql, praram);
         let res = await Abstract.addMutil(ChamCong, data);
         return res;
     },
