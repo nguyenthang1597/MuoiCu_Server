@@ -42,7 +42,7 @@ module.exports = {
     },
     getTonKhoItem: async function (req, res, next) {
         try {
-            var workbook = XLSX.readFile(__dirname + '\\..\\public\\excel\\mauphutung.xlsx');
+            var workbook = XLSX.readFile(__dirname + '/excel/mauphutung.xlsx');
             var sheet_name_list = workbook.Sheets[workbook.SheetNames[0]];
 
 

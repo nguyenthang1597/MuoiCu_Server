@@ -17,6 +17,7 @@ require('dotenv').config({
 const config = require('./config');
 
 const app = express();
+app.use(express.static(__dirname + '/public'));
 let server = http.createServer(app);
 let io = require('./lib/socket')(server);
 app.io = io;
