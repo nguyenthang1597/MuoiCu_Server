@@ -9,6 +9,8 @@ router.put('/ma/:ma', Item.update);
 router.put('/maphutung/:maphutung', Item.update);
 router.delete('/ma/:ma', Item.delete);
 router.delete('/maphutung/:maphutung', Item.delete);
+router.post('/import/', Item.addMutil);
+
 
 
 module.exports = router;
