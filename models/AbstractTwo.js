@@ -75,14 +75,14 @@ class AbstractTwo {
         return res2;
     }
     static async addMutil(ClassTableOne, ClassTableTwo, param) {
-        let param1 = ClassTableOne.getArrayParam(param);
-        let param2 = ClassTableOne.getArrayParam(param);
+        let param1 = ClassTableOne.getArrayParam(param[0]);
+        let param2 = ClassTableTwo.getArrayParam(param[0]);
         let index = 0;
 
         let sql = "SELECT AUTO_INCREMENT as stt FROM  INFORMATION_SCHEMA.TABLES " +
             " WHERE TABLE_SCHEMA = '" + config.database.database + "' " +
             " AND  TABLE_NAME   = 'phutung' ";
-        let res = await query(sql, params);
+        let res = await query(sql);
         index = res[0].phutung;
 
         if (param1) {

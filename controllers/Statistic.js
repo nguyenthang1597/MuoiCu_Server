@@ -40,6 +40,29 @@ module.exports = {
             })
         }
     },
+    getExeclBangCongEmployee: async function (req, res, next) {
+        try {
+            var param = {};
+            if (req.query.start) {
+                param.start = req.query.start;
+            }
+            else
+                param.start = new Date();
+            if (req.query.end)
+                param.end = req.query.end;
+            else
+                param.end = new Date();
+            let resulft = await Statistic.getBangCongEmployee(param);
+
+            res.json(resulft);
+        } catch (error) {
+            res.status(400).json({
+                error: {
+                    message: error.message
+                }
+            })
+        }
+    },
     getTonKhoItem: async function (req, res, next) {
         try {
             req.file

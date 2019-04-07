@@ -107,10 +107,10 @@ module.exports = {
         return res;
     },
     getTonKhoItem: async function (praram) {
-        let sql = "select ma,tentiengviet,soluongtonkho from phutung ORDER BY ma";
+        let sql = "select ma,tentiengviet,soluongtonkho,vitri from phutung ORDER BY ma";
         let res = await query(sql);
         let i = 1;
-        res = res.map(e => [i++, e.ma, e.tentiengviet, e.soluongtonkho]);
+        res = res.map(e => [i++, e.ma, e.tentiengviet, e.soluongtonkho, e.vitri]);
         return res;
     },
 };
