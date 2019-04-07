@@ -74,7 +74,7 @@ module.exports = {
             })
         }
     },
-    add: async function (req, res, next) {
+    addMutil: async function (req, res, next) {
         try {
             let body = {
                 ...req.body
