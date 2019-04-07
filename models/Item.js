@@ -33,6 +33,9 @@ class Item {
         let arr = Object.keys(param).filter(e => tmp.includes(e)).map(e => param[e])
         return arr;
     }
+    static getDuplicate() {
+        return "ON DUPLICATE KEY UPDATE soluongtonkho = VALUES(soluongtonkho) + soluongtonkho ";
+    }
     static getArrayParam(param) {
         let tmp = ['maphutung', 'tentienganh', 'tentiengviet', 'loaiphutung', 'giaban_head', 'giaban_le', 'soluongtonkho', 'ghichu', 'vitri', 'ngaycapnhat', 'vat_head', 'vat_le', 'giaban_head_chuavat', 'giaban_le_chuavat'];
         let obj = {};

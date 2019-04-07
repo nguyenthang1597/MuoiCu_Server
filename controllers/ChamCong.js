@@ -93,9 +93,7 @@ module.exports = {
         try {
             var ngay = new Date();
             if (req.params.ngay) {
-                console.log("ngayu", req.params.ngay);
                 ngay = new Date(req.params.ngay);
-                console.log(ngay);
             }
             let resulft = await Statistic.addBangCong(ngay, req.body.chitiet);
             if (resulft == null)
@@ -115,18 +113,26 @@ module.exports = {
         }
     },
     test: async function (req, res, next) {
-        const puppeteer = require('puppeteer');
-        const browser = await puppeteer.launch({ headless: true });
-        const page = await browser.newPage();
-        await page.goto('https://blog.risingstack.com', { waitUntil: 'networkidle0' });
-        var buffer = await page.pdf({
-            format: 'A4'
-        });
-        let fileName = 'heelo.pdf';
-        res.setHeader('Content-disposition', 'attachment; filename=' + fileName);
-        res.type('application/pdf');
-        res.send(buffer);
-        await browser.close();
+        try {
+            const puppeteer = require('puppeteer');
+            const browser = await puppeteer.launch({ headless: true });
+            const page = await browser.newPage();
+            await page.goto('/heelo/', { waitUntil: 'networkidle0' });
+            var buffer = await page.pdf({
+                format: 'A4'
+            });
+            let fileName = 'heelo.pdf';
+            // res.setHeader('Content-disposition', 'attachment; filename=' + fileName);
+            res.type('application/pdf');
+            res.send(buffer);
+            await browser.close();
+        } catch (error) {
+            res.status(400).json({
+                error: {
+                    message: error.message
+                }
+            })
+        }
     }
 
 }; 

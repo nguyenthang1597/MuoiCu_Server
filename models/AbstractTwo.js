@@ -99,7 +99,7 @@ class AbstractTwo {
                 val = val + "(" + values + "),";
             });
             val = val.substr(0, val.length - 1);
-            sql = `INSERT INTO ${ClassTableOne.getNameTable()} (` + col + `) VALUES ${val}`;
+            sql = `INSERT INTO ${ClassTableOne.getNameTable()} (` + col + `) VALUES ${val} ${ClassTableOne.getDuplicate()}`;
             res = await query(sql, params);
         }
         if (param2) {
