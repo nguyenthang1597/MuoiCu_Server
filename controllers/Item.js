@@ -1,5 +1,7 @@
 const Item = require("../models/Item");
 const Abstract = require("../models/Abstract");
+const librespone = require("../lib/respone");
+const logger = require("../lib/logger");
 
 module.exports = {
     getList: async function (req, res, next) {
@@ -18,7 +20,11 @@ module.exports = {
         try {
             var param = Object.assign(req.params, req.query);
             let resulft = await Abstract.getOne(Item, param);
-            res.json(resulft);
+            if (resulft == null) {
+                librespone.error(req, res, "Không tìm thấy mã: ");
+            }
+            else
+                res.json(resulft);
         } catch (error) {
             res.status(400).json({
                 error: {
@@ -68,5 +74,19 @@ module.exports = {
             })
         }
     },
-
+    add: async function (req, res, next) {
+        try {
+            let body = {
+                ...req.body
+            }
+            let resulft = await Abstract.addMutil(Item, body.chitiet);
+            res.json(resulft);
+        } catch (error) {
+            res.status(400).json({
+                error: {
+                    message: error.message
+                }
+            })
+        }
+    },
 };

@@ -12,10 +12,16 @@ const StatisticRouter = require('./Statistic');
 const ChamCongRouter = require('./ChamCong');
 
 
-
 const createError = require('http-errors');
+const logger = require("../lib/logger");
 const LiftTable = require('../controllers/LiftTable');
 module.exports = (app) => {
+
+  app.use(function (req, res, next) {
+    req.fullUrl = req.method + " " + req.protocol + '://' + req.get('host') + req.originalUrl;
+    logger.info(req.fullUrl);
+    next();
+  });
   LiftTable(app.io);
   app.use('/account', AccountRouter);
   app.use('/customer', CustomerRouter);

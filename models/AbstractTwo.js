@@ -35,40 +35,40 @@ class AbstractTwo {
         return res[0];
     }
     static async add(ClassTableOne, ClassTableTwo, param) {
-        let param1 = ClassTableOne.getParam(param);
+        let param1 = ClassTableOne.getArrayParam(param);
         let values = '';
-        for (let a of param1) {
-            values = values + `'${a}'` + ',';
+        for (var a in param1) {
+            values = values + `'${param1[a]}'` + ',';
         }
         values = values.substr(0, values.length - 1);
-        let sql1 = `INSERT INTO ${ClassTableOne.getNameTable()} (` + ClassTableOne.getColmun() + `) VALUES (${values})`;
+        let sql1 = `INSERT INTO ${ClassTableOne.getNameTable()} (` + ClassTableOne.getColmun(param1) + `) VALUES (${values})`;
         let res1 = await query(sql1);
-        let param2 = ClassTableTwo.getParam(param);
+        let param2 = ClassTableTwo.getArrayParam(param);
         values = '';
-        for (let a of param2) {
-            values = values + `'${a}'` + ',';
+        for (var a in param2) {
+            values = values + `'${param2[a]}'` + ',';
         }
         values = values.substr(0, values.length - 1);
-        let sql2 = `INSERT INTO ${ClassTableTwo.getNameTable()} (` + ClassTableTwo.getColmun() + `) VALUES (${values})`;
+        let sql2 = `INSERT INTO ${ClassTableTwo.getNameTable()} (` + ClassTableTwo.getColmun(param2) + `) VALUES (${values})`;
         let res2 = await query(sql2);
         return res2;
     }
     static async addAuto(ClassTableOne, ClassTableTwo, param) {
-        let param1 = ClassTableOne.getParam(param);
+        let param1 = ClassTableOne.getArrayParam(param);
         let values = '', val = '';
-        for (let a of param1) {
-            values = values + `'${a}'` + ',';
-        }
+        for (var a in param1)
+            values = values + `'${param1[a]}'` + ',';
         values = values.substr(0, values.length - 1);
-        let sql1 = `INSERT INTO ${ClassTableOne.getNameTable()} (` + ClassTableOne.getColmun() + `) VALUES (${values})`;
+        let sql1 = `INSERT INTO ${ClassTableOne.getNameTable()} (` + ClassTableOne.getColmun(param1) + `) VALUES (${values})`;
         let res1 = await query(sql1);
         let id = [];
-        let param2 = ClassTableTwo.getParam(param);
+        let param2 = ClassTableTwo.getArrayParam(param);
         values = res1.insertId;
-        for (let a of param2) {
-            values = values + ",'" + a + "'";
+
+        for (var a in param2) {
+            values = values + ",'" + param2[a] + "'";
         }
-        let sql2 = `INSERT INTO ${ClassTableTwo.getNameTable()} (` + ClassTableTwo.getColmun() + `) VALUES (${values})`;
+        let sql2 = `INSERT INTO ${ClassTableTwo.getNameTable()} (` + ClassTableTwo.getColmun(param2) + `) VALUES (${values})`;
         let res2 = await query(sql2);
         return res2;
     }
@@ -83,8 +83,6 @@ class AbstractTwo {
         }
         let paramSetValue1 = ClassTableOne.getArrayParam(paramSetValue);
         if (Object.keys(paramSetValue1).length) {
-            console.log('vaoday1');
-            console.log(paramSetValue1);
 
             let param1 = [];
             let set1 = '';
@@ -99,8 +97,6 @@ class AbstractTwo {
 
         let paramSetValue2 = ClassTableTwo.getArrayParam(paramSetValue);
         if (Object.keys(paramSetValue2).length) {
-            console.log('vaoday2');
-            console.log(paramSetValue2);
 
             let set2 = '';
             let param2 = [];

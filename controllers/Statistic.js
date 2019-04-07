@@ -42,6 +42,8 @@ module.exports = {
     },
     getTonKhoItem: async function (req, res, next) {
         try {
+            req.file
+
             var workbook = XLSX.readFile(__dirname + '/excel/mauphutung.xlsx');
             var sheet_name_list = workbook.Sheets[workbook.SheetNames[0]];
 
@@ -80,5 +82,8 @@ module.exports = {
                 }
             })
         }
+    },
+    inportItem: async function (req, res, next) {
+        return res.json({});
     }
 };
