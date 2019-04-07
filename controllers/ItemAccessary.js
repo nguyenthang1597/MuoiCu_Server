@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const Item = require("../models/Item");
 const ItemAccessary = require("../models/ItemAccessary");
 const Abstract = require("../models/Abstract");
@@ -69,8 +70,12 @@ module.exports = {
             let body = {
                 ...req.body
             }
-            let resulft = await AbstractTwo.addMutil(Item, ItemAccessary, body.chitiet);
-            res.json(resulft);
+
+            let tmp = _.partition(body.chitiet, 500);
+            for (var i in tmp) {
+                await AbstractTwo.addMutil(Item, ItemAccessary, tmp[i]);
+            }
+            res.json({ message: "Thành công", type: "success" });
         } catch (error) {
             res.status(400).json({
                 error: {
