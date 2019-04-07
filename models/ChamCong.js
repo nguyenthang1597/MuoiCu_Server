@@ -30,7 +30,9 @@ class Salary {
         });
         return obj;
     }
-
+    static getDuplicate() {
+        return "";
+    }
 
 }
 

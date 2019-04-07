@@ -47,6 +47,9 @@ class BillChan {
         result["chitiet"] = res;
         return result;
     }
+    static getDuplicate() {
+        return "";
+    }
 }
 
 module.exports = BillChan;

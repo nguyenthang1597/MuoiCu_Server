@@ -39,7 +39,7 @@ class Abstract {
             params.push(param[col[k]]);
         }
         values = values.substr(0, values.length - 1);
-        let sql = `INSERT INTO ${ClassTable.getNameTable()} (` + col + `) VALUES (${values})`;
+        let sql = `INSERT INTO ${ClassTable.getNameTable()} (` + col + `) VALUES (${values}) ${ClassTable.getDuplicate()}`;
         let res = await query(sql, params);
         return res;
     }
@@ -58,7 +58,7 @@ class Abstract {
         });
         val = val.substr(0, val.length - 1);
 
-        let sql = `INSERT INTO ${ClassTable.getNameTable()} (` + col + `) VALUES ${val}`;
+        let sql = `INSERT INTO ${ClassTable.getNameTable()} (` + col + `) VALUES ${val} ${ClassTable.getDuplicate()}`;
         let res = await query(sql, params);
         return res;
     }

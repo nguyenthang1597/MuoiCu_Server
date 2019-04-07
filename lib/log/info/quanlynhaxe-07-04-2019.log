@@ -7,3 +7,7 @@
 17:34:10 07-04-2019 : info : GET http://localhost:8080/chamcong/cong 
 17:34:12 07-04-2019 : info : GET http://localhost:8080/chamcong/test 
 17:34:16 07-04-2019 : info : GET http://localhost:8080/chamcong/test 
+19:58:05 07-04-2019 : info : GET http://localhost:8080/customer/ 
+19:58:05 07-04-2019 : warn :SELECT * FROM khachhang where  1=?    - Data: [1]
+19:58:15 07-04-2019 : info : GET http://localhost:8080/employee/ 
+19:58:15 07-04-2019 : warn :SELECT tb1.ma,tb1.ten,tb1.cmnd,tb1.sdt,tb1.gmail,tb2.username,tb2.chucvu FROM nhanvien tb1 INNER JOIN taikhoan tb2 ON tb1.taikhoan=tb2.username where  1=?    - Data: [1]

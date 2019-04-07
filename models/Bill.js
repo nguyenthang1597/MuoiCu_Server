@@ -35,7 +35,9 @@ class Bill {
         });
         return obj;
     }
-
+    static getDuplicate() {
+        return "";
+    }
 }
 
 module.exports = Bill;

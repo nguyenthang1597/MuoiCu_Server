@@ -15,6 +15,9 @@ class Salary {
         let tmp = ['ten'];
         return tmp.includes(k);
     }
+    static getDuplicate() {
+        return "";
+    }
 }
 
 module.exports = Salary;

@@ -42,6 +42,9 @@ class BillLe {
         result["chitiet"] = res;
         return result;
     }
+    static getDuplicate() {
+        return "";
+    }
 }
 
 module.exports = BillLe;

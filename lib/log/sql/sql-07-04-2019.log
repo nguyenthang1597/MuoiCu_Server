@@ -1,0 +1,2 @@
+19:58:05 07-04-2019 : warn :SELECT * FROM khachhang where  1=?    - Data: [1]
+19:58:15 07-04-2019 : warn :SELECT tb1.ma,tb1.ten,tb1.cmnd,tb1.sdt,tb1.gmail,tb2.username,tb2.chucvu FROM nhanvien tb1 INNER JOIN taikhoan tb2 ON tb1.taikhoan=tb2.username where  1=?    - Data: [1]

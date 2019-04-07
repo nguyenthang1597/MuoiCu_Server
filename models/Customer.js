@@ -15,6 +15,9 @@ class Customer {
         let tmp = ['ten', 'sodienthoai', 'diachi', 'biensoxe'];
         return tmp.includes(k);
     }
+    static getDuplicate() {
+        return "";
+    }
 }
 
 module.exports = Customer;

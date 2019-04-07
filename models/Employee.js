@@ -39,6 +39,9 @@ class Employee {
         let tmp = ['ten', 'cmnd', 'sdt', 'gmail'];
         return tmp.includes(k);
     }
+    static getDuplicate() {
+        return "";
+    }
 }
 
 module.exports = Employee;

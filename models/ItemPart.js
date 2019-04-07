@@ -36,6 +36,9 @@ class Item {
         });
         return obj;
     }
+    static getDuplicate() {
+        return "";
+    }
 }
 
 module.exports = Item;
