@@ -5,7 +5,7 @@ class Item {
     static getColmun(param) {
         if (param) {
             let tmp = ['maphutung', 'mamau', 'model'];
-            let tamp = tmp.filter(e => Object.keys(param).includes(e));
+            return tmp.filter(e => Object.keys(param).includes(e));
         }
         return "`maphutung`,`model`,`mamau`";
     }

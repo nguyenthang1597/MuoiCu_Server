@@ -76,20 +76,26 @@ class AbstractTwo {
     }
     static async addMutil(ClassTableOne, ClassTableTwo, param) {
         let param1 = ClassTableOne.getArrayParam(param[0]);
+
+
         let param2 = ClassTableTwo.getArrayParam(param[0]);
         let index = 0;
+        console.log(param);
+        console.log(param1);
+        console.log(param2);
+
 
         let sql = "SELECT AUTO_INCREMENT as stt FROM  INFORMATION_SCHEMA.TABLES " +
             " WHERE TABLE_SCHEMA = '" + config.database.database + "' " +
             " AND  TABLE_NAME   = 'phutung' ";
-        let res = await query(sql);
-        index = res[0].phutung;
+        let res = await query(sql, params);
+        index = res[0].stt;
 
         if (param1) {
             let val = '';
-            var col = ClassTableOne.getColmun(param1[0]);
+            var col = ClassTableOne.getColmun(param1);
             var params = [];
-            param1.forEach(element => {
+            param.forEach(element => {
                 var values = '';
                 for (var k in col) {
                     values = values + "?,";
@@ -104,13 +110,13 @@ class AbstractTwo {
         }
         if (param2) {
             let val = '';
-            var col = ClassTableTwo.getForgenKey() + "," + ClassTableTwo.getColmun(param2[0]);
+            var col = ClassTableTwo.getColmun(param2);
             var params = [];
-            param2.forEach(element => {
-                var values = '?,';
+            param.forEach(element => {
+                var values = '?';
                 params.push(index++);
                 for (var k in col) {
-                    values = values + "?";
+                    values = values + ",?";
                     params.push(element[col[k]]);
                 }
                 val = val + "(" + values + "),";

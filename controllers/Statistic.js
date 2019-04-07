@@ -54,6 +54,14 @@ module.exports = {
                 param.end = new Date();
             let resulft = await Statistic.getBangCongEmployee(param);
 
+
+            var currDate = moment(param.start).startOf('day');
+            var lastDate = moment(param.end).startOf('day');
+
+            while (currDate.add(1, 'days').diff(lastDate) < 0) {
+                console.log(currDate.toDate());
+            }
+
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -65,8 +73,6 @@ module.exports = {
     },
     getTonKhoItem: async function (req, res, next) {
         try {
-            req.file
-
             var workbook = XLSX.readFile(__dirname + '/excel/mauphutung.xlsx');
             var sheet_name_list = workbook.Sheets[workbook.SheetNames[0]];
 
