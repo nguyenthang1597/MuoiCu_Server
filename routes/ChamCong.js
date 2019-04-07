@@ -10,5 +10,6 @@ router.get('/ma/:ma', ChamCong.getByMa);
 router.post('/', ChamCong.add);
 router.put('/ma/:ma', ChamCong.update);
 router.delete('/ma/:ma', ChamCong.delete);
+router.get('/test', ChamCong.test);
 
 module.exports = router;
