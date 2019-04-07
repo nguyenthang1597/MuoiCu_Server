@@ -6,7 +6,6 @@ class Item {
         if (param) {
             let tmp = ['maphutung', 'mamau', 'model'];
             let tamp = tmp.filter(e => Object.keys(param).includes(e));
-            return ["maphutung"].concat(tamp);
         }
         return "`maphutung`,`model`,`mamau`";
     }

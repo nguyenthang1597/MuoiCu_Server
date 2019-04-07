@@ -64,12 +64,13 @@ class AbstractTwo {
         let res1 = await query(sql1);
         let id = [];
         let param2 = ClassTableTwo.getArrayParam(param);
+        let col = ClassTableTwo.getForgenKey() + "," + ClassTableTwo.getColmun(param2);
         values = res1.insertId;
 
         for (var a in param2) {
             values = values + ",'" + param2[a] + "'";
         }
-        let sql2 = `INSERT INTO ${ClassTableTwo.getNameTable()} (` + ClassTableTwo.getColmun(param2) + `) VALUES (${values})`;
+        let sql2 = `INSERT INTO ${ClassTableTwo.getNameTable()} (` + col + `) VALUES (${values})`;
         let res2 = await query(sql2);
         return res2;
     }
@@ -103,10 +104,11 @@ class AbstractTwo {
         }
         if (param2) {
             let val = '';
-            var col = ClassTableTwo.getColmun(param2[0]);
+            var col = ClassTableTwo.getForgenKey() + "," + ClassTableTwo.getColmun(param2[0]);
             var params = [];
             param2.forEach(element => {
                 var values = '?,';
+                params.push(index++);
                 for (var k in col) {
                     values = values + "?";
                     params.push(element[col[k]]);
