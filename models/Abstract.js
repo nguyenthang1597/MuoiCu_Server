@@ -31,7 +31,6 @@ class Abstract {
     }
     static async add(ClassTable, param) {
         var col = ClassTable.getColmun(param);
-        console.log('hello');
         var values = '';
         var params = [];
 
@@ -45,8 +44,6 @@ class Abstract {
         return res;
     }
     static async addMutil(ClassTable, param) {
-        console.log('praramarmara');
-        console.log(param);
         let val = '';
         var col = ClassTable.getColmun(param[0]);
         var params = [];
@@ -62,7 +59,6 @@ class Abstract {
         val = val.substr(0, val.length - 1);
 
         let sql = `INSERT INTO ${ClassTable.getNameTable()} (` + col + `) VALUES ${val}`;
-        console.log(sql);
         let res = await query(sql, params);
         return res;
     }

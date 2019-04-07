@@ -64,5 +64,19 @@ module.exports = {
             })
         }
     },
-
+    addMutil: async function (req, res, next) {
+        try {
+            let body = {
+                ...req.body
+            }
+            let resulft = await AbstractTwo.addMutil(Item,ItemPart, body.chitiet);
+            res.json(resulft);
+        } catch (error) {
+            res.status(400).json({
+                error: {
+                    message: error.message
+                }
+            })
+        }
+    },
 };

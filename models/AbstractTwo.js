@@ -1,5 +1,6 @@
 const query = require('../lib/db')
 const Encrypt = require('../lib/encryptPassword');
+const config = require('../config');
 
 class AbstractTwo {
     static async getList(ClassTableOne, ClassTableTwo, param, paramQsl1, paramQsl2) {
@@ -71,6 +72,53 @@ class AbstractTwo {
         let sql2 = `INSERT INTO ${ClassTableTwo.getNameTable()} (` + ClassTableTwo.getColmun(param2) + `) VALUES (${values})`;
         let res2 = await query(sql2);
         return res2;
+    }
+    static async addMutil(ClassTableOne, ClassTableTwo, param) {
+        let param1 = ClassTableOne.getArrayParam(param);
+        let param2 = ClassTableOne.getArrayParam(param);
+        let index = 0;
+
+        let sql = "SELECT AUTO_INCREMENT as stt FROM  INFORMATION_SCHEMA.TABLES " +
+            " WHERE TABLE_SCHEMA = '" + config.database.database + "' " +
+            " AND  TABLE_NAME   = 'phutung' ";
+        let res = await query(sql, params);
+        index = res[0].phutung;
+
+        if (param1) {
+            let val = '';
+            var col = ClassTableOne.getColmun(param1[0]);
+            var params = [];
+            param1.forEach(element => {
+                var values = '';
+                for (var k in col) {
+                    values = values + "?,";
+                    params.push(element[col[k]]);
+                }
+                values = values.substr(0, values.length - 1);
+                val = val + "(" + values + "),";
+            });
+            val = val.substr(0, val.length - 1);
+            sql = `INSERT INTO ${ClassTableOne.getNameTable()} (` + col + `) VALUES ${val}`;
+            res = await query(sql, params);
+        }
+        if (param2) {
+            let val = '';
+            var col = ClassTableTwo.getColmun(param2[0]);
+            var params = [];
+            param2.forEach(element => {
+                var values = '?,';
+                for (var k in col) {
+                    values = values + "?";
+                    params.push(element[col[k]]);
+                }
+                val = val + "(" + values + "),";
+            });
+            col = ClassTableTwo.getForgenKey() + "," + col;
+            val = val.substr(0, val.length - 1);
+            sql = `INSERT INTO ${ClassTableTwo.getNameTable()} (` + col + `) VALUES ${val}`;
+            res = await query(sql, params);
+        }
+        return res;
     }
     static async update(ClassTableOne, ClassTableTwo, paramSetValue, paramWhere) {
         if (!paramSetValue || !paramWhere)

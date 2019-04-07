@@ -1,0 +1,14 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 1
+    },
+    "auditLog": "C:\\Users\\Nguyen Kim Thao\\Desktop\\MuoiCu_Server\\lib\\log\\sql\\.9e34fbef0b384c3321eafa8b4386ac90d404cf84-audit.json",
+    "files": [
+        {
+            "date": 1554624488025,
+            "name": "C:\\Users\\Nguyen Kim Thao\\Desktop\\MuoiCu_Server\\lib\\log\\sql\\sql-07-04-2019.log",
+            "hash": "7de2a262c78c4869cc21ac2d56e8362d"
+        }
+    ]
+}

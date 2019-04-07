@@ -4,6 +4,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+
 const {
   normalizePort,
   onError,
@@ -21,7 +23,7 @@ app.use(express.static(__dirname + '/public'));
 let server = http.createServer(app);
 let io = require('./lib/socket')(server);
 app.io = io;
-require('./lib/express')(app, logger, express, cookieParser, passport, cors);
+require('./lib/express')(app, logger, express, cookieParser, passport, cors, bodyParser);
 require('./lib/passport')(passport);
 require('./routes')(app);
 

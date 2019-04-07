@@ -54,7 +54,7 @@ module.exports = {
     },
     delete: async function (req, res, next) {
         try {
-            let resulft = await AbstractTwo.delete(ItemAccessary,Item, req.params);
+            let resulft = await AbstractTwo.delete(ItemAccessary, Item, req.params);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({
@@ -64,5 +64,19 @@ module.exports = {
             })
         }
     },
-
+    addMutil: async function (req, res, next) {
+        try {
+            let body = {
+                ...req.body
+            }
+            let resulft = await AbstractTwo.addMutil(Item, ItemAccessary, body.chitiet);
+            res.json(resulft);
+        } catch (error) {
+            res.status(400).json({
+                error: {
+                    message: error.message
+                }
+            })
+        }
+    },
 };
