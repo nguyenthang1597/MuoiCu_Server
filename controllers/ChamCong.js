@@ -2,6 +2,7 @@ const passport = require("passport");
 const ChamCong = require("../models/ChamCong");
 const Statistic = require("../models/Statistic");
 const Abstract = require("../models/Abstract");
+const librespone = require("../lib/respone");
 
 
 
@@ -48,15 +49,10 @@ module.exports = {
     },
     update: async function (req, res, next) {
         try {
-            var param = Object.assign(req.params, req.query);
-            let resulft = await Abstract.add(ChamCong, req.body, req.param);
+            let resulft = await Abstract.add(ChamCong, req.body, req.params);
             res.json(resulft);
         } catch (error) {
-            res.status(400).json({
-                error: {
-                    message: error.message
-                }
-            })
+            librespone.error(req, res, error.message);
         }
     },
     delete: async function (req, res, next) {
@@ -91,10 +87,10 @@ module.exports = {
     },
     addChamCong: async function (req, res, next) {
         try {
-            var ngay = new Date();
-            if (req.params.ngay) {
-                ngay = new Date(req.params.ngay);
-            }
+            if (!req.params.ngay || new Date(req.params.ngay) > new Date())
+                librespone.error(req, res, "Không thể chấm công hơn ngày");
+            var ngay = new Date(req.params.ngay)
+
             let resulft = await Statistic.addBangCong(ngay, req.body.chitiet);
             if (resulft == null)
                 res.status(400).json({

@@ -4,23 +4,23 @@ class Item {
     }
     static getColmun(param) {
         if (param) {
-            let tmp = ['maphutung', 'loaixe'];
+            let tmp = ['maphutung', 'loaixe', 'mau', 'model'];
             return tmp.filter(e => Object.keys(param).includes(e));
         }
-        return "`maphutung`,`loaixe`";
+        return "`maphutung`,`loaixe`,`mau`, `model`";
     }
     static getSelect(tb) {
-        return `${tb}.loaixe`;
+        return `${tb}.loaixe, ${tb}.mau, ${tb}.model`;
     }
     static getLike(k) {
-        let tmp = ['loaixe'];
+        let tmp = ['loaixe', 'mau', 'model'];
         return tmp.includes(k);
     }
     static getKey() {
         return "ma";
     }
     static getParam(param) {
-        let tmp = ['loaixe'];
+        let tmp = ['loaixe', 'mau', 'model'];
         let arr = Object.keys(param).filter(e => tmp.includes(e)).map(e => param[e])
         return arr;
     }
@@ -28,7 +28,7 @@ class Item {
         return "maphutung";
     }
     static getArrayParam(param) {
-        let tmp = ['loaixe'];
+        let tmp = ['loaixe', 'mau', 'model'];
         let obj = {};
         let arr = Object.keys(param).filter(e => tmp.includes(e));
         arr.forEach(e => {

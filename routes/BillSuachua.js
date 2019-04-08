@@ -7,7 +7,7 @@ router.post('/', Bill.add);
 router.put('/mahoadon/:mahoadon', Bill.update);
 router.delete('/mahoadon/:mahoadon', Bill.delete);
 router.get('/mahoadon/:mahoadon/chitiet', Bill.getChitiet);
-
+router.get("/mahoadon/:mahoadon/export",Bill.export);
 
 
 module.exports = router;

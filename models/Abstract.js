@@ -94,6 +94,7 @@ class Abstract {
         set = set.substr(0, set.length - 1);
         let where = ' 1=? ';
         param.push(1);
+        console.log(paramWhere);
         if (paramWhere) {
             for (var k in paramWhere) {
                 where = where + " AND " + k + ' = ? ';

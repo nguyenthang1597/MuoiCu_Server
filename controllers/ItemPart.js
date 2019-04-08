@@ -70,7 +70,7 @@ module.exports = {
             let body = {
                 ...req.body
             }
-            let tmp = _.chunk(body.chitiet, 1500);
+            let tmp = _.chunk(body.chitiet, 3000);
             for (var i in tmp) {
                 await AbstractTwo.addMutil(Item, ItemPart, tmp[i]);
             }

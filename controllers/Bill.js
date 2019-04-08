@@ -42,7 +42,7 @@ module.exports = {
     update: async function (req, res, next) {
         try {
             var param = Object.assign(req.params, req.query);
-            let resulft = await Abstract.update(Bill, req.body, req.param);
+            let resulft = await Abstract.update(Bill, req.body, req.params);
             res.json(resulft);
         } catch (error) {
             res.status(400).json({

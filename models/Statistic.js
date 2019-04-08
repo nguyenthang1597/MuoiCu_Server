@@ -43,7 +43,6 @@ module.exports = {
         return res;
     },
     getBangCongEmployee: async function (praram) {
-
         var param = [];
         if (praram.start) {
             param.push(praram.start);
@@ -55,6 +54,8 @@ module.exports = {
         }
         var sql = "select nv.ma,nv.ten from nhanvien nv LEFT JOIN taikhoan tk on nv.taikhoan=tk.username where  tk.chucvu='Sửa Chữa'";
         var nv = await query(sql);
+        var nhanvien = [];
+
         sql = "select cthd.manvsuachua as manv,CAST(hd.ngaythanhtoan as DATE) as ntt, SUM(cthd.tiencong) as tiencong  " +
             " from chitiethoadonsuachua cthd LEFT JOIN hoadon hd on cthd.mahoadon=hd.mahoadon  " +
             " WHERE DATEDIFF(hd.ngaythanhtoan,?) >=0 and DATEDIFF(hd.ngaythanhtoan,?)<=0 and hd.trangthai =1  " +
@@ -64,8 +65,20 @@ module.exports = {
         var lastDate = moment(new Date(praram.end));
         var data = [];
         for (var cur = currDate.clone(); cur.diff(lastDate) <= 0; cur = cur.add(1, "days")) {
+            var str = moment(cur).format('YYYY-MM-DD');
+            var dt = nv.slice(0);
+            var dsngay = tiencong.filter(e => { return e.ntt = str; })
+            dt = dt.map(e => {
+                var kt = dsngay.find(obj => {
+                    return obj.manv === e.ma
+                })
+                if (!kt)
+                    return e.ma, e.ten, 0, 0, 0, ''
+                return e.ma, e.ten, kt.tiencong, 0, 0, '';
+            })
+            data.push({ ngay: str, data: dt });
         }
-        return tiencong;
+        return data;
         // var sql = "select cthd.manvsuachua,nv.ten,SUM(cthd.tiencong) as tiencong,  CAST(hd.ngaythanhtoan AS date) as ngaythanhtoan from  hoadon hd, chitiethoadonsuachua cthd , nhanvien nv " +
         //     " where hd.mahoadon=cthd.mahoadon and hd.trangthai=1 AND nv.ma=cthd.manvsuachua ";
 

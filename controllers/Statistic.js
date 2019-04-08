@@ -31,7 +31,13 @@ module.exports = {
     },
     getBangCongEmployee: async function (req, res, next) {
         try {
-            let resulft = await Statistic.getBangCongEmployee(req.query);
+            var param = req.query;
+            if (!param.end)
+                param.end = new Date();
+            if (!param.start)
+                param.start = new Date();
+            let resulft = await Statistic.getBangCongEmployee(param);
+            console.log(resulft);
             res.json(resulft);
         } catch (error) {
             librespone.error(req, res, error.message);

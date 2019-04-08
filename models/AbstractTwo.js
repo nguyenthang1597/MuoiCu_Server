@@ -9,7 +9,6 @@ class AbstractTwo {
         param1 = Object.assign(param1, paramQsl1);
         let param2 = ClassTableTwo.getArrayParam(param);
         param2 = Object.assign(param2, paramQsl2);
-        console.log(param2);
         let wherevalue = [
             1,
         ];
