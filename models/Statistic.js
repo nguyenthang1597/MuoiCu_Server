@@ -58,9 +58,15 @@ module.exports = {
 
         sql = "select cthd.manvsuachua as manv,CAST(hd.ngaythanhtoan as DATE) as ntt, SUM(cthd.tiencong) as tiencong  " +
             " from chitiethoadonsuachua cthd LEFT JOIN hoadon hd on cthd.mahoadon=hd.mahoadon  " +
-            " WHERE DATEDIFF(hd.ngaythanhtoan,?) >=0 and DATEDIFF(hd.ngaythanhtoan,?)<=0 and hd.trangthai =1  " +
+            " WHERE DATEDIFF(hd.ngaythanhtoan,?) >=0 and DATEDIFF(?,hd.ngaythanhtoan)<=0 and hd.trangthai =1  " +
             " group by cthd.manvsuachua,ntt order by hd.ngaythanhtoan ASC";
         var tiencong = await query(sql, param);
+
+
+        sql = "select * from chamcong where  DATEDIFF(ngay,?) >=0 AND DATEDIFF(?,ngay) <=0";
+        var chamcong = await query(sql, param);
+
+
         var currDate = moment(new Date(praram.start));
         var lastDate = moment(new Date(praram.end));
         var data = [];
@@ -68,13 +74,29 @@ module.exports = {
             var str = moment(cur).format('YYYY-MM-DD');
             var dt = nv.slice(0);
             var dsngay = tiencong.filter(e => { return e.ntt = str; })
+            var dschamcong = chamcong.filter(e => { return e.ngay = str; })
             dt = dt.map(e => {
+                var resulft = { ma: e.ma, ten: e.ten };
+                var cc = dschamcong.find(obj => {
+                    return obj.manv == e.ma;
+                })
                 var kt = dsngay.find(obj => {
                     return obj.manv === e.ma
                 })
                 if (!kt)
-                    return e.ma, e.ten, 0, 0, 0, ''
-                return e.ma, e.ten, kt.tiencong, 0, 0, '';
+                    resulft.tiencong = 0
+                else
+                    resulft.tiencong = kt.tiencong;
+                if (!cc) {
+                    resulft.ghichu = '';
+                    resulft.vskp = 0;
+                    resulft.vsbd = 0;
+                } else {
+                    resulft.ghichu = cc.ghichu;
+                    resulft.vskp = cc.vskp;
+                    resulft.vsbd = cc.vsbd;
+                }
+                return resulft;
             })
             data.push({ ngay: str, data: dt });
         }

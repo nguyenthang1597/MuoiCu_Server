@@ -108,6 +108,37 @@ module.exports = {
             })
         }
     },
+    getExeclBangCongEmployee: async function (req, res, next) {
+        try {
+            var param = {};
+            if (req.query.start) {
+                param.start = req.query.start;
+            }
+            else
+                param.start = new Date();
+            if (req.query.end)
+                param.end = req.query.end;
+            else
+                param.end = new Date();
+            let resulft = await Statistic.getBangCongEmployee(param);
+
+
+            var currDate = moment(param.start).startOf('day');
+            var lastDate = moment(param.end).startOf('day');
+
+            while (currDate.add(1, 'days').diff(lastDate) < 0) {
+                console.log(currDate.toDate());
+            }
+
+            res.json(resulft);
+        } catch (error) {
+            res.status(400).json({
+                error: {
+                    message: error.message
+                }
+            })
+        }
+    },
     test: async function (req, res, next) {
         try {
             const puppeteer = require('puppeteer');
