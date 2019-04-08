@@ -42,7 +42,7 @@ class Account {
     }
     static getColmun(param) {
         if (param) {
-            let tmp = ['username', 'password', 'password'];
+            let tmp = ['username', 'password', 'chucvu'];
             return tmp.filter(e => Object.keys(param).includes(e));
         }
         return "`username`,`password`,`chucvu`";

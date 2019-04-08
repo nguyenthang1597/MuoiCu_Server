@@ -71,9 +71,12 @@ module.exports = {
                 ...req.body
             }
 
-            let tmp = _.partition(body.chitiet, 500);
+            let body = {
+                ...req.body
+            }
+            let tmp = _.chunk(body.chitiet, 1500);
             for (var i in tmp) {
-                await AbstractTwo.addMutil(Item, ItemAccessary, tmp[i]);
+                await AbstractTwo.addMutil(Item, ItemPart, tmp[i]);
             }
             res.json({ message: "Thành công", type: "success" });
         } catch (error) {

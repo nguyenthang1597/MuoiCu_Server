@@ -6,10 +6,10 @@ class Salary {
     }
     static getColmun(param) {
         if (param) {
-            let tmp = ['manv', 'tiencong', 'vskp', 'vsbd', 'ghichu', 'ngay'];
+            let tmp = ['manv', 'ngay', 'vskp', 'vsbd', 'ghichu'];
             return tmp.filter(e => Object.keys(param).includes(e));
         }
-        return "`manv`,`tiencong`,`vskp`,`vsbd`,`ghichu`,`ngay`";
+        return "`manv`,`ngay`,`vskp`,`vsbd`,`ghichu`";
     }
     static getLike(k) {
         let tmp = ['ghichu'];
@@ -31,7 +31,7 @@ class Salary {
         return obj;
     }
     static getDuplicate() {
-        return "";
+        return " ON DUPLICATE KEY UPDATE ghichu = VALUES(ghichu),vsbd= VALUES(vsbd),vskp=VALUES(vskp) ";
     }
 
 }

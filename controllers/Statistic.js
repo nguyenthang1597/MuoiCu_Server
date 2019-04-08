@@ -1,6 +1,7 @@
 
 const Statistic = require("../models/Statistic");
 const XLSX = require('xlsx');
+const librespone = require("../lib/respone");
 
 
 module.exports = {
@@ -33,11 +34,7 @@ module.exports = {
             let resulft = await Statistic.getBangCongEmployee(req.query);
             res.json(resulft);
         } catch (error) {
-            res.status(400).json({
-                error: {
-                    message: error.message
-                }
-            })
+            librespone.error(req, res, error.message);
         }
     },
     getExeclBangCongEmployee: async function (req, res, next) {

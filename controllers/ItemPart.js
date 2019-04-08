@@ -70,12 +70,13 @@ module.exports = {
             let body = {
                 ...req.body
             }
-            let tmp = _.partition(body.chitiet, 500);
+            let tmp = _.chunk(body.chitiet, 1500);
             for (var i in tmp) {
                 await AbstractTwo.addMutil(Item, ItemPart, tmp[i]);
             }
             res.json({ message: "Thành công", type: "success" });
         } catch (error) {
+            console.log(error.message);
             res.status(400).json({
                 error: {
                     message: error.message
