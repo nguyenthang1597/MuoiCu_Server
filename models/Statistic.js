@@ -63,7 +63,7 @@ module.exports = {
         var tiencong = await query(sql, param);
 
 
-        sql = "select * from chamcong where  DATEDIFF(ngay,?) >=0 AND DATEDIFF(?,ngay) <=0";
+        sql = "select * from chamcong where  DATEDIFF(ngay,?) >=0 AND DATEDIFF(?,ngay) <=0 GROUP BY ngay,manv";
         var chamcong = await query(sql, param);
 
 
@@ -77,6 +77,7 @@ module.exports = {
             var dschamcong = chamcong.filter(e => { return e.ngay = str; })
             dt = dt.map(e => {
                 var resulft = { ma: e.ma, ten: e.ten };
+
                 var cc = dschamcong.find(obj => {
                     return obj.manv == e.ma;
                 })

@@ -56,16 +56,23 @@ module.exports = {
             else
                 param.end = new Date();
             let resulft = await Statistic.getBangCongEmployee(param);
+            var workbook = XLSX.readFile(__dirname + '/excel/mauphutung.xlsx');
+            var sheet_name_list = workbook.Sheets[workbook.SheetNames[0]];
 
 
-            var currDate = moment(param.start).startOf('day');
-            var lastDate = moment(param.end).startOf('day');
+            XLSX.utils.sheet_add_aoa(ws, ws_data, { origin: -1 });
+            XLSX.utils.book_append_sheet(wb, ws, new_ws_name);
 
-            while (currDate.add(1, 'days').diff(lastDate) < 0) {
-                console.log(currDate.toDate());
-            }
+            var ws_data = await Statistic.getTonKhoItem(req.query);
+            var wb = XLSX.utils.book_new();
+            var ws = { ...sheet_name_list };
+            XLSX.utils.sheet_add_aoa(ws, ws_data, { origin: -1 });
+            XLSX.utils.book_append_sheet(wb, ws, new_ws_name);
+            res.setHeader('Content-disposition', 'attachment; filename=filecong.xlsx');
+            res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'buffer' });
+            res.send(new Buffer(wbout));
 
-            res.json(resulft);
         } catch (error) {
             res.status(400).json({
                 error: {

@@ -1,9 +1,9 @@
 var liftTable = [];
 for (var i = 0; i < 8; i++)
-    if (i == 1) {
-        liftTable[i] = { "trangthai": 2, "mahoadon": "MHD-1554309260492" };
-    } else
-        liftTable[i] = { "trangthai": 0, "mahoadon": "" };
+    // if (i == 1) {
+    //     liftTable[i] = { "trangthai": 2, "mahoadon": "MHD-1554309260492" };
+    // } else
+    liftTable[i] = { "trangthai": 0, "mahoadon": "" };
 module.exports = function (io) {
     io.on('connection', function (socket) {
 
