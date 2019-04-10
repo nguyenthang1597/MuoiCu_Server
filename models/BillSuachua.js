@@ -49,6 +49,12 @@ class BillChan {
     static getDuplicate() {
         return "";
     }
+    static async deleteMahoaDon (param) {
+        var sql="DELETE FROM chitiethoadonsuachua WHERE mahoadon= ?";  
+        var res= await query(sql, param);
+        return res;
+    }
+
 }
 
 module.exports = BillChan;

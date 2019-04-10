@@ -6,24 +6,24 @@ class BillLe {
     }
     static getColmun(param) {
         if (param) {
-            let tmp = ['mahoadon', 'maphutung', 'soluong', 'ghichu'];
+            let tmp = ['mahoadon', 'maphutung', 'soluong', 'ghichu','chietkhau'];
             return tmp.filter(e => Object.keys(param).includes(e));
         }
-        return "`mahoadon`,`maphutung`,`soluong`,`ghichu`";
+        return "`mahoadon`,`maphutung`,`soluong`,`ghichu`,`chietkhau`";
     }
     static getLike(k) {
         return false;
     }
     static getSelect(tb) {
-        return `${tb}.maphutung,${tb}.soluong,${tb}.ghichu`;
+        return `${tb}.maphutung,${tb}.soluong,${tb}.ghichu,${tb}.chietkhau`;
     }
     static getParam(param) {
-        let tmp = ['maphutung', 'soluong', 'ghichu'];
+        let tmp = ['maphutung', 'soluong', 'ghichu','chietkhau'];
         let arr = Object.keys(param).filter(e => tmp.includes(e)).map(e => param[e])
         return arr;
     }
     static getArrayParam(param) {
-        let tmp = ['maphutung', 'soluong', 'ghichu'];
+        let tmp = ['maphutung', 'soluong', 'ghichu','chietkhau'];
         let obj = {};
         let arr = Object.keys(param).filter(e => tmp.includes(e));
         arr.forEach(e => {

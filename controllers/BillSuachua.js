@@ -6,6 +6,7 @@ const XLSX = require('xlsx');
 const librespone = require("../lib/respone");
 
 module.exports = {
+  
     getList: async function (req, res, next) {
         try {
             let resulft = await AbstractTwo.getList(Bill, BillSuachua, req.query);
@@ -71,9 +72,20 @@ module.exports = {
     },
     update: async function (req, res, next) {
         try {
-            var param = Object.assign(req.params, req.query);
-            let resulft = await Abstract.add(Bill, req.body, req.params);
-            res.json(resulft);
+            let {
+                mahoadon,
+                chitiet,
+                ...conlai
+            } = req.body;
+            var bodybill = conlai;
+            var detailbill = chitiet;
+            for (var k in detailbill) {
+                detailbill[k]['mahoadon'] = mahoadon;
+            }
+            let resulft = await Abstract.update(Bill, bodybill,mahoadon);
+            await BillSuachua.deleteMahoaDon(mahoadon);
+            resulft = await Abstract.addMutil(BillSuachua, detailbill);
+            res.json({ "mahoadon": mahoadon });
         } catch (error) {
             res.status(400).json({
                 error: {
