@@ -17,7 +17,7 @@ module.exports = {
             param.push(praram.end);
             sql = sql + "AND DATEDIFF(?,ngaythanhtoan) >= 0 ";
         }
-        sql = sql + " ORDER BY ngaythanhtoan ASC";
+        sql = sql + " ORDER BY ngaythanhtoan desc";
         let res = await query(sql, param);
         return res;
     },
@@ -38,7 +38,7 @@ module.exports = {
             sql = sql + " AND nv.ma = ? ";
             param.push(praram.manvsuachua);
         }
-        sql = sql + " GROUP BY cthd.manvsuachua,ngaythanhtoan ORDER BY hd.ngaythanhtoan ASC ";
+        sql = sql + " GROUP BY cthd.manvsuachua,ngaythanhtoan ORDER BY hd.ngaythanhtoan desc ";
         let res = await query(sql, param);
         return res;
     },
