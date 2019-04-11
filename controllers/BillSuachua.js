@@ -56,6 +56,7 @@ module.exports = {
             bodybill['trangthai'] = 0;
             bodybill['loaihoadon'] = 0;
             bodybill['mahoadon'] = mahoadon;
+            bodybill['ngayban'] = new Date();
             for (var k in detailbill) {
                 detailbill[k]['mahoadon'] = mahoadon;
             }
@@ -78,6 +79,7 @@ module.exports = {
                 ...conlai
             } = req.body;
             var bodybill = conlai;
+            bodybill['ngaythanhtoan'] = new Date();
             var detailbill = chitiet;
             for (var k in detailbill) {
                 detailbill[k]['mahoadon'] = mahoadon;
