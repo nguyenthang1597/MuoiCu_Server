@@ -40,6 +40,8 @@ module.exports = {
             bodybill['trangthai'] = 1;
             bodybill['loaihoadon'] = 1;
             bodybill['mahoadon'] = mahoadon;
+            bodybill['ngaythanhtoan'] = new Date();
+            bodybill['ngayban'] = new Date();
             for (var k in detailbill) {
                 detailbill[k]['mahoadon'] = mahoadon;
             }
