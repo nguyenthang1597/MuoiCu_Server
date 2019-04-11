@@ -29,6 +29,8 @@ module.exports = {
     },
     add: async function (req, res, next) {
         try {
+            req.body.ngaythanhtoan = new Date();
+            req.body.ngayban = new Date();
             let resulft = await Abstract.add(Bill, req.body);
             res.json(resulft);
         } catch (error) {
