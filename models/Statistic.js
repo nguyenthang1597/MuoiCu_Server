@@ -66,7 +66,7 @@ module.exports = {
         sql = "select * from chamcong where  DATEDIFF(ngay,?) >=0 AND DATEDIFF(?,ngay) <=0 GROUP BY ngay,manv";
         var chamcong = await query(sql, param);
 
-
+        console.log(tiencong);
         var currDate = moment(new Date(praram.start));
         var lastDate = moment(new Date(praram.end));
         var data = [];
@@ -99,6 +99,7 @@ module.exports = {
                 }
                 return resulft;
             })
+            console.log(dt);
             data.push({ ngay: str, data: dt });
         }
         return data;
