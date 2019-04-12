@@ -1,5 +1,5 @@
 var liftTable = [];
-for (var i = 0; i < 8; i++)
+for (var i = 0; i < 12; i++)
     // if (i == 1) {
     //     liftTable[i] = { "trangthai": 2, "mahoadon": "MHD-1554309260492" };
     // } else

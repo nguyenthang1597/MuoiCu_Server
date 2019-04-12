@@ -68,45 +68,39 @@ module.exports = {
 
         sql = "select * from chamcong where  DATEDIFF(ngay,?) >=0 AND DATEDIFF(?,ngay) >=0 GROUP BY ngay,manv";
         var chamcong = await query(sql, param);
+        var currDate = moment(new Date(praram.start));
+        var lastDate = moment(new Date(praram.end));
+        for (var cur = currDate.clone(); cur.diff(lastDate) <= 0; cur = cur.add(1, "days")) {
+            var str = moment(cur).format('YYYY-MM-DD');
+            var dt = nv.slice(0);
+            var dsngay = tiencong.filter(e => { return e.ntt === str; })
+            var dschamcong = chamcong.filter(e => { return e.ngay === str; })
+            dt = dt.map(e => {
+                var resulft = { ma: e.ma, ten: e.ten };
 
-        console.log(tiencong);
-        console.log(chamcong);
-        console.log(nv);
-
-        // var currDate = moment(new Date(praram.start));
-        // var lastDate = moment(new Date(praram.end));
-        // for (var cur = currDate.clone(); cur.diff(lastDate) <= 0; cur = cur.add(1, "days")) {
-        //     var str = moment(cur).format('YYYY-MM-DD');
-        //     var dt = nv.slice(0);
-        //     var dsngay = tiencong.filter(e => { return e.ntt = str; })
-        //     var dschamcong = chamcong.filter(e => { return e.ngay = str; })
-        //     dt = dt.map(e => {
-        //         var resulft = { ma: e.ma, ten: e.ten };
-
-        //         var cc = dschamcong.find(obj => {
-        //             return obj.manv == e.ma;
-        //         })
-        //         var kt = dsngay.find(obj => {
-        //             return obj.manv === e.ma
-        //         })
-        //         if (!kt)
-        //             resulft.tiencong = 0
-        //         else
-        //             resulft.tiencong = kt.tiencong;
-        //         if (!cc) {
-        //             resulft.ghichu = '';
-        //             resulft.vskp = 0;
-        //             resulft.vsbd = 0;
-        //         } else {
-        //             resulft.ghichu = cc.ghichu;
-        //             resulft.vskp = cc.vskp;
-        //             resulft.vsbd = cc.vsbd;
-        //         }
-        //         return resulft;
-        //     })
-        //     console.log(dt);
-        //     data.push({ ngay: str, data: dt });
-        // }
+                var cc = dschamcong.find(obj => {
+                    return obj.manv == e.ma;
+                })
+                var kt = dsngay.find(obj => {
+                    return obj.manv === e.ma
+                })
+                if (!kt)
+                    resulft.tiencong = 0
+                else
+                    resulft.tiencong = kt.tiencong;
+                if (!cc) {
+                    resulft.ghichu = '';
+                    resulft.vskp = 0;
+                    resulft.vsbd = 0;
+                } else {
+                    resulft.ghichu = cc.ghichu;
+                    resulft.vskp = cc.vskp;
+                    resulft.vsbd = cc.vsbd;
+                }
+                return resulft;
+            })
+            data.push({ ngay: str, data: dt });
+        }
         return data;
         // var sql = "select cthd.manvsuachua,nv.ten,SUM(cthd.tiencong) as tiencong,  CAST(hd.ngaythanhtoan AS date) as ngaythanhtoan from  hoadon hd, chitiethoadonsuachua cthd , nhanvien nv " +
         //     " where hd.mahoadon=cthd.mahoadon and hd.trangthai=1 AND nv.ma=cthd.manvsuachua ";
@@ -171,10 +165,10 @@ module.exports = {
         return res;
     },
     getTonKhoItem: async function (praram) {
-        let sql = "select ma,tentiengviet,soluongtonkho,vitri from phutung ORDER BY ma";
+        let sql = "select ma,tentiengviet,soluongtonkho,vitri ,giaban_le, giaban_le*soluongtonkho as thanhtien from phutung ORDER BY ma";
         let res = await query(sql);
         let i = 1;
-        res = res.map(e => [i++, e.ma, e.tentiengviet, e.soluongtonkho, e.vitri]);
+        res = res.map(e => [i++, e.ma, e.tentiengviet, e.soluongtonkho, e.vitri,e.giaban_le,'','',e.thanhtien]);
         return res;
     },
 };
