@@ -10,6 +10,8 @@ const BillleRouter = require('./BillLe');
 const BillSuaChuaRouter = require('./BillSuachua');
 const StatisticRouter = require('./Statistic');
 const ChamCongRouter = require('./ChamCong');
+const CuaHangNgoaiRouter = require('./CuaHangNgoai');
+
 
 
 const createError = require('http-errors');
@@ -35,6 +37,8 @@ module.exports = (app) => {
   app.use('/billsuachua', BillSuaChuaRouter);
   app.use('/statistic', StatisticRouter);
   app.use('/chamcong', ChamCongRouter);
+  app.use('/cuahangngoai', CuaHangNgoaiRouter);
+
 
 
 
