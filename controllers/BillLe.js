@@ -47,6 +47,7 @@ module.exports = {
             }
             let resulft = await Abstract.add(Bill, bodybill);
             resulft = await Abstract.addMutil(BillLe, detailbill);
+            await BillLe.giamSoLuongPhuTung(detailbill);
             res.json({ "mahoadon": mahoadon });
         } catch (error) {
             res.status(400).json({

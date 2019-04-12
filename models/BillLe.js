@@ -6,7 +6,7 @@ class BillLe {
     }
     static getColmun(param) {
         if (param) {
-            let tmp = ['mahoadon', 'maphutung', 'soluong', 'ghichu','chietkhau'];
+            let tmp = ['mahoadon', 'maphutung', 'soluong', 'ghichu', 'chietkhau'];
             return tmp.filter(e => Object.keys(param).includes(e));
         }
         return "`mahoadon`,`maphutung`,`soluong`,`ghichu`,`chietkhau`";
@@ -18,12 +18,12 @@ class BillLe {
         return `${tb}.maphutung,${tb}.soluong,${tb}.ghichu,${tb}.chietkhau`;
     }
     static getParam(param) {
-        let tmp = ['maphutung', 'soluong', 'ghichu','chietkhau'];
+        let tmp = ['maphutung', 'soluong', 'ghichu', 'chietkhau'];
         let arr = Object.keys(param).filter(e => tmp.includes(e)).map(e => param[e])
         return arr;
     }
     static getArrayParam(param) {
-        let tmp = ['maphutung', 'soluong', 'ghichu','chietkhau'];
+        let tmp = ['maphutung', 'soluong', 'ghichu', 'chietkhau'];
         let obj = {};
         let arr = Object.keys(param).filter(e => tmp.includes(e));
         arr.forEach(e => {
@@ -44,6 +44,13 @@ class BillLe {
     }
     static getDuplicate() {
         return "";
+    }
+    static async giamSoLuongPhuTung(bill) {
+        for (var i in bill) {
+            var sql = " UPDATE phutung SET soluongtonkho = soluongtonkho - ? WHERE maphutung = ? ";
+            var res = await query(sql,[bill[i].soluong,bill[i].maphutung]);
+        }
+        return {};
     }
 }
 
