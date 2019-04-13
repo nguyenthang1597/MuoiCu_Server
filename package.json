@@ -27,5 +27,8 @@
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^3.8.0",
     "xlsx": "^0.14.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
   }
 }

@@ -35,29 +35,50 @@ module.exports = {
             var wb = XLSX.utils.book_new();
 
             var k=3;
-            var cc=['A','B','C','D','E','F','G','H','L'];
+            var cc=['A','B','C','D','E','F','G','H', 'I'];
             var ci=1;
             var data=[];
-
-
-            // for(var i in resulft)
-            // {
-            //     if(resulft[i].loaihoadon==1)
-            //     {                    
-            //         var datt=await BillLe.getChitiet(resulft[i].mahoadon);
-            //         for(var l in datt){
-            //             data[datt[l].maphutung]+=datt[l].maphutung;
-            //         }
-            //         console.log(datt);
-            //     }
-            
-            // }
+          
+            let tmp = resulft.filter(e => e.loaihoadon === 1);
+            let arr = tmp.map(e => BillLe.getChitiet(e.mahoadon));
+            let _result = await Promise.all(arr);
+            _result = _result.reduce((returnData, cur) => {
+                return [...returnData, ...cur.chitiet]
+            }, [])
+            data = _result.reduce((returnData, cur) => {
+                if(returnData[cur.maphutung]){
+                    returnData[cur.maphutung]['soluong'] += cur.soluong;
+                    return returnData;
+                }
+                returnData[cur. maphutung] = cur;
+                return returnData
+            }, {})
+            data = Object.keys(data).map((e, index) => ({STT: index+1, maphutung: data[e].maphutung, ten: data[e].tenphutung, soluong: data[e].soluong, vitri: '', dongia: data[e].dongia, chuaVAT: null, VAT:null, tongtien: data[e].dongia * data[e].soluong}));
+            let i = 7;
+            var tam=[];
+            var tam2 = [];
+            data.forEach(e => {
+                Object.keys(e).forEach((k, j) => {
+                    console.log(`${cc[j]}${i}`)
+                    console.log(e[k])
+                    ws[`${cc[j]}${i}`] = {
+                        t: 's',
+                        v: e[k],
+                        w: e[k],
+                        r: e[k]
+                    }
+                })
+                i++;
+            })
+            ws["!ref"]=`A1:K${i}`;
+          
             XLSX.utils.book_append_sheet(wb, ws, 'billel');
-            XLSX.utils.book_append_sheet(wb, ws, 'billchan');
-            res.setHeader('Content-disposition', 'attachment; filename=filecong.xlsx');
+            // XLSX.utils.book_append_sheet(wb, ws, 'billchan');
+            res.setHeader('Content-disposition', 'attachment; filename=thongkebill.xlsx');
             res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'buffer' });
             res.send(new Buffer(wbout));
+            console.log('adas');
         } catch (error) {
             res.status(400).json({
                 error: {

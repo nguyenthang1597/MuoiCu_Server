@@ -6,24 +6,24 @@ class BillLe {
     }
     static getColmun(param) {
         if (param) {
-            let tmp = ['mahoadon', 'maphutung', 'soluong', 'ghichu', 'chietkhau'];
+            let tmp = ['mahoadon', 'maphutung','tenphutung','dongia','soluong', 'ghichu', 'chietkhau','nhacungcap'];
             return tmp.filter(e => Object.keys(param).includes(e));
         }
-        return "`mahoadon`,`maphutung`,`soluong`,`ghichu`,`chietkhau`";
+        return "`mahoadon`,`maphutung`,`tenphutung`,`dongia`,`soluong`,`ghichu`,`chietkhau`,`nhacungcap`";
     }
     static getLike(k) {
         return false;
     }
     static getSelect(tb) {
-        return `${tb}.maphutung,${tb}.soluong,${tb}.ghichu,${tb}.chietkhau`;
+        return `${tb}.maphutung,${tb}.tenphutung,${tb}.dongia,${tb}.soluong,${tb}.ghichu,${tb}.chietkhau,${tb.nhacungcap}`;
     }
     static getParam(param) {
-        let tmp = ['maphutung', 'soluong', 'ghichu', 'chietkhau'];
+        let tmp = ['maphutung', 'tenphutung','dongia','soluong', 'ghichu', 'chietkhau','nhacungcap'];
         let arr = Object.keys(param).filter(e => tmp.includes(e)).map(e => param[e])
         return arr;
     }
     static getArrayParam(param) {
-        let tmp = ['maphutung', 'soluong', 'ghichu', 'chietkhau'];
+        let tmp = ['maphutung','tenphutung','dongia', 'soluong', 'ghichu', 'chietkhau','nhacungcap'];
         let obj = {};
         let arr = Object.keys(param).filter(e => tmp.includes(e));
         arr.forEach(e => {
@@ -37,7 +37,7 @@ class BillLe {
         var res = await query(sql, param);
         console.log(res);
         result = res[0];
-        sql = "select ct.*,IFNULL(pt.giaban_le,0)  as dongia,pt.tentiengviet from chitiethoadonle ct LEFT JOIN phutung pt ON ct.maphutung=pt.maphutung where ct.mahoadon=?  group by ct.ma";
+        sql = "select * from chitiethoadonle ct where ct.mahoadon=?";
         res = await query(sql, param);
         result["chitiet"] = res;
         return result;
