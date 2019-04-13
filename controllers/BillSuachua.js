@@ -6,7 +6,7 @@ const XLSX = require('xlsx');
 const librespone = require("../lib/respone");
 
 module.exports = {
-  
+
     getList: async function (req, res, next) {
         try {
             let resulft = await AbstractTwo.getList(Bill, BillSuachua, req.query);
@@ -84,7 +84,7 @@ module.exports = {
             for (var k in detailbill) {
                 detailbill[k]['mahoadon'] = mahoadon;
             }
-            let resulft = await Abstract.update(Bill, bodybill,mahoadon);
+            let resulft = await Abstract.update(Bill, bodybill, mahoadon);
             await BillSuachua.deleteMahoaDon(mahoadon);
             resulft = await Abstract.addMutil(BillSuachua, detailbill);
             res.json({ "mahoadon": mahoadon });
@@ -110,11 +110,23 @@ module.exports = {
     },
     export: async function (req, res, next) {
         try {
-            var workbook = XLSX.readFile(__dirname + '/excel/mausuachua.xlsx');
+            var workbook = XLSX.readFile(__dirname + '/excel/mausuachua.xlsx', {
+                type: 'binary',
+                cellDates: true, cellStyles: true, rowStyles: true, rowDates: true,bookVBA:true,cellFormula:true,
+                codepage:true,cellFormula:true,cellNF:true,cellHTML:true,cellText:true,dateNF:true,
+              
+            });
             var sheet_name_list = workbook.Sheets[workbook.SheetNames[0]];
             var ws_data = await BillSuachua.getChitiet(req.params.mahoadon);
             var wb = XLSX.utils.book_new();
             var ws = { ...sheet_name_list };
+            ws["!ref"] = "A1:AK70";
+            // for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
+            //     // Example: Get second cell in each row, i.e. Column "B"
+            //     const secondCell = ws[XLSX.utils.encode_cell({ r: rowNum, c: 1 })];
+            //     // NOTE: secondCell is undefined if it does not exist (i.e. if its empty)
+            //     console.log(secondCell); // secondCell.v contains the value, i.e. string or number
+            // }
             var vitri = 25;
             ws["A8"] = { v: ws_data.tenkh, w: ws_data.tenkh, t: 's' };
             ws["AI2"] = { v: req.params.mahoadon, w: req.params.mahoadon, t: 's' };
@@ -126,18 +138,7 @@ module.exports = {
                 ws["AE" + vitri] = { v: dt.tiencong, w: dt.tiencong, t: 'n' };
                 vitri++;
             }
-            // ws['!ref'] = 'A1:K6';
-            // ws["A4"].v = "Ngày " + new_ws_name;
-            // ws["A4"].h = "Ngày " + new_ws_name;
-            // ws["A4"].w = "Ngày " + new_ws_name;
-            // ws["A4"].r = "<t>Ngày " + new_ws_name + "<t>";
-
-            // console.log(ws["A4"]);
-            // XLSX.utils.sheet_add_aoa(ws, ws_data, { origin: -1 });
             XLSX.utils.book_append_sheet(wb, ws, "phieusuachua");
-
-
-
             res.setHeader('Content-disposition', 'attachment; filename=phieusuachua.xlsx');
             res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'buffer' });
